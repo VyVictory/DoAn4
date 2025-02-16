@@ -5,7 +5,7 @@ import AdminPage from '../pages/AdminPage';
 import UserPage from '../pages/UserPage';
 import AboutPage from '../pages/AboutPage';
 import ContactPage from '../pages/ContactPage';
-import NavBar from '../components/NavBar';
+import NavBar from '../components/NavBar.jsx';
 
 const AppRouter = () => {
   const location = useLocation();
