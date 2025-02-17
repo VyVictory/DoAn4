@@ -1,3 +1,17 @@
+/* styles.css hoặc file CSS của bạn */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.NavbarUser {
+    padding-top: 56px;
+    /* Chiều cao của NavBar */
+}
+
+.HighNavbar {
+    height: 56px;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+}

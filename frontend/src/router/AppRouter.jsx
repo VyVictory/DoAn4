@@ -3,26 +3,21 @@ import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-route
 import '../styles/tailwind.css';
 import AdminPage from '../pages/AdminPage';
 import UserPage from '../pages/UserPage';
-import AboutPage from '../pages/AboutPage';
 import Messages from '../pages/Messages.jsx';
-import NavBar from '../components/NavBar.jsx';
+import Layout from './Layout.jsx';
 
-const AppRouter = () => {
-  const location = useLocation();
-  const isAdminRoute = location.pathname.startsWith('/admin');
 
-  return (
-    <>
-      {!isAdminRoute && <NavBar />}
-      <Routes>
-        <Route path="/admin" element={<AdminPage />} />
-        <Route path="/" element={<UserPage />} />
-        <Route path="/messages" element={<Messages />} />
-        {/* <Route path="/contact" element={<ContactPage />} /> */}
-      </Routes>
-    </>
-  );
-};
+const AppRouter = () => (
+  
+  <Routes>
+    <Route element={<Layout />}>
+      <Route path="/" element={<UserPage />} />
+      <Route path="/messages" element={<Messages />} />
+      {/* Các route khác */}
+    </Route>
+    <Route path="/admin" element={<AdminPage />} />
+  </Routes>
+);
 
 const App = () => (
   <Router>

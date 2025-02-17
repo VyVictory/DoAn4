@@ -18,7 +18,7 @@ const NavBar = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const dropdownRef = useRef(null);
   const searchRef = useRef(null);
-
+  const inputSearchRef = useRef(null);
   const toggleSearch = () => {
     setIsSearchVisible(!isSearchVisible);
     if (isDropdownVisible) {
@@ -73,37 +73,52 @@ const NavBar = () => {
     { icon: UsersIcon, label: "Friends", namepage: 'groups' },
     { icon: ShoppingBagIcon, label: "Marketplace", namepage: 'store' },
   ];
+  const [width, setWidth] = useState(235); // State to hold the current width
+
+  // Update width on render
+  useEffect(() => {
+    if (inputSearchRef.current) {
+      setWidth(inputSearchRef.current.offsetWidth); // Set the initial width dynamically
+    }
+  }, []);
 
   return (
-    <nav className="bg-white shadow-md relative flex justify-items-center h-[64px]">
+    <nav className="HighNavbar bg-white shadow-md fixed w-screen flex justify-items-center z-50"
+      style={{ minWidth: 'screen' }}
+    >
       <div className="flex w-[100%] ">
         {/* Left: Logo and Search bg */}
-        <div ref={searchRef} className={`z-10  left-0 top-0 flex flex-col  w-full max-w-[300px] ${isSearchVisible && 'border-r-2 absolute bg-white shadow-lg rounded-br-lg p-1'} `}>
+        <div ref={searchRef} className={`z-10  left-0 top-0 flex flex-col w-full max-w-[300px]  ${isSearchVisible && 'border-r-2 absolute bg-white shadow-lg rounded-br-lg'} `}>
           {/* Phần trên: Logo và ô tìm kiếm */}
-          <div className="flex items-center py-3 px-2 space-x-2 w-full">
+          <div className="HighNavbar flex items-center justify-end h-full px-2 space-x-2 w-full">
             {/* Logo hoặc nút quay lại */}
             {isSearchVisible ? (
               <button
                 onClick={() => setIsSearchVisible(false)}
                 className="h-10 w-6 flex items-center">
-                <ArrowLeftIcon className="h-6 w-6 text-blue-500" />
+                <ArrowLeftIcon className="h-6 w-6 text-blue-500 hover:scale-125" />
               </button>
             ) : (
-              <button>
-                <img className='h-10 w-10 rounded-full' src={logo} alt="" />
+              <button className='w-10 h-10 mx-1'>
+                <img className=' w-10 rounded-full' src={logo} alt="" />
               </button>
             )}
-
             {/* Ô tìm kiếm */}
-            <div className=" flex items-center  flex-grow">
+            <div
+              ref={inputSearchRef}
+              className={`flex w-full items-center flex-grow transition-all duration-300 ease-in-out`}
+              style={{
+                maxWidth: isSearchVisible ? '350px' : width, // Transition from 0px to 350px
+                overflow: 'hidden', // Hide overflow during transition
+              }}
+            >
               <button onClick={() => setIsSearchVisible(true)}>
-
-                <MagnifyingGlassIcon className={`h-10 w-10 stroke-gray-500 p-2 bg-slate-100
-                  ${isSearchVisible ? 'rounded-l-full ' : 'rounded-full lg:rounded-r-none'}
-                   `} />
+                <MagnifyingGlassIcon className={`h-10 w-10 stroke-gray-300 p-2 bg-slate-100 hover:stroke-violet-400
+        ${isSearchVisible ? 'rounded-l-full ' : 'rounded-full lg:rounded-r-none'}
+         `} />
               </button>
               <div
-                className={`  ${isSearchVisible ? 'block' : 'hidden lg:block'} relative w-full pr-2 bg-slate-100 border-gray-300 rounded-r-full `}>
+                className={`  ${isSearchVisible ? 'block ' : 'hidden lg:block'}   relative w-full bg-slate-100 border-gray-300 rounded-r-full `}>
                 <input
                   type="text"
                   onClick={() => setIsSearchVisible(true)}
@@ -130,26 +145,22 @@ const NavBar = () => {
         <div className="flex-grow"></div>
         {/* Right: Profile and Menu */}
         <div className="flex items-center space-x-3 pr-4">
-          {/* Nút Menu */}
           <button
             className="md:hidden bg-gray-100 p-2 rounded-full hover:bg-blue-100 hover:ring-2 hover:ring-blue-200 transition duration-300"
             onClick={toggleMenu}
           >
             <Bars3Icon className="h-7 w-7 text-gray-700 hover:text-blue-500 transition" />
           </button>
-          {/* Nút Chat */}
           <LinkTo namepage="messages">
             <button
               className="bg-gray-100 p-2 rounded-full hover:bg-blue-100 hover:ring-2 hover:ring-blue-200 transition duration-300">
               <ChatBubbleLeftIcon className="h-7 w-7 text-gray-700 hover:text-blue-500 transition" />
             </button>
           </LinkTo>
-          {/* Nút Thông báo */}
           <LinkTo namepage="notification" css="bg-gray-100 p-2 rounded-full hover:bg-blue-100 hover:ring-2 hover:ring-blue-200 transition duration-300">
             <BellIcon className="h-7 w-7 text-gray-700 hover:text-blue-500 transition" />
           </LinkTo>
-          {/* Ảnh đại diện */}
-          <button className="h-12 w-12 border-2 border-gray-300 rounded-full overflow-hidden hover:ring-2 hover:ring-blue-200 transition duration-300">
+          <button className="h-12 w-full aspect-square border-2 border-gray-300 rounded-full overflow-hidden hover:ring-2 hover:ring-blue-200 transition duration-300">
             <img src={avt} alt="Profile" className="w-full h-full object-cover" />
           </button>
         </div>
@@ -158,11 +169,11 @@ const NavBar = () => {
       </div>
       {/* Center: Navigation Links */}
       <div className="h-[64px] absolute left-1/2 transform -translate-x-1/2 top-0 w-fit flex justify-center">
-        <ul className="hidden md:flex flex-row justify-center gap-3">
+        <ul className="HighNavbar hidden md:flex flex-row justify-center gap-3">
           {menuItems.map(({ icon: Icon, namepage }, index) => (
-            <div className='flex items-center py-2 '> {/* border-b-4 border-blue-500*/}
+            <div className='h-full py-1 flex items-center'>  {/*border-b-4 border-blue-500*/}
               <LinkTo key={index} namepage={namepage} css='group flex items-center hover:bg-gray-200 w-24 h-full justify-center rounded-md transition-colors duration-200'>
-                <div className="flex items-center justify-center h-10 w-10">
+                <div className="flex items-center justify-center h-full w-full aspect-square">
                   <Icon className="h-6 w-6 text-gray-600 transition-colors duration-200 group-hover:text-blue-500 stroke-[1.5]" />
                 </div>
               </LinkTo>
