@@ -11,6 +11,7 @@ import {
 import { ArrowLeftIcon, ChatBubbleLeftIcon, BellIcon } from "@heroicons/react/24/outline"; // Import icon
 import logo from '../logo.webp';
 import avt from '../img/DefaultAvatar.jpg'
+import LinkTo from './LinkTo';
 
 const NavBar = () => {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
@@ -67,16 +68,17 @@ const NavBar = () => {
     };
   }, []);
   const menuItems = [
-    { icon: HomeIcon, label: "Home" },
-    { icon: VideoCameraIcon, label: "Videos" },
-    { icon: UsersIcon, label: "Friends" },
-    { icon: ShoppingBagIcon, label: "Marketplace" },
+    { icon: HomeIcon, label: "Home", namepage: 'home' },
+    { icon: VideoCameraIcon, label: "Videos", namepage: 'videos' },
+    { icon: UsersIcon, label: "Friends", namepage: 'groups' },
+    { icon: ShoppingBagIcon, label: "Marketplace", namepage: 'store' },
   ];
+
   return (
     <nav className="bg-white shadow-md relative flex justify-items-center h-[64px]">
       <div className="flex w-[100%] ">
         {/* Left: Logo and Search bg */}
-        <div ref={searchRef} className={`   left-0 top-0 flex flex-col  w-full max-w-[300px] ${isSearchVisible && 'border-r-2 absolute bg-white shadow-lg rounded-br-lg p-1'} `}>
+        <div ref={searchRef} className={`z-10  left-0 top-0 flex flex-col  w-full max-w-[300px] ${isSearchVisible && 'border-r-2 absolute bg-white shadow-lg rounded-br-lg p-1'} `}>
           {/* Phần trên: Logo và ô tìm kiếm */}
           <div className="flex items-center py-3 px-2 space-x-2 w-full">
             {/* Logo hoặc nút quay lại */}
@@ -135,55 +137,57 @@ const NavBar = () => {
           >
             <Bars3Icon className="h-7 w-7 text-gray-700 hover:text-blue-500 transition" />
           </button>
-
           {/* Nút Chat */}
-          <button className="bg-gray-100 p-2 rounded-full hover:bg-blue-100 hover:ring-2 hover:ring-blue-200 transition duration-300">
-            <ChatBubbleLeftIcon className="h-7 w-7 text-gray-700 hover:text-blue-500 transition" />
-          </button>
-
+          <LinkTo namepage="messages">
+            <button
+              className="bg-gray-100 p-2 rounded-full hover:bg-blue-100 hover:ring-2 hover:ring-blue-200 transition duration-300">
+              <ChatBubbleLeftIcon className="h-7 w-7 text-gray-700 hover:text-blue-500 transition" />
+            </button>
+          </LinkTo>
           {/* Nút Thông báo */}
-          <button className="bg-gray-100 p-2 rounded-full hover:bg-blue-100 hover:ring-2 hover:ring-blue-200 transition duration-300">
+          <LinkTo namepage="notification" css="bg-gray-100 p-2 rounded-full hover:bg-blue-100 hover:ring-2 hover:ring-blue-200 transition duration-300">
             <BellIcon className="h-7 w-7 text-gray-700 hover:text-blue-500 transition" />
-          </button>
-
+          </LinkTo>
           {/* Ảnh đại diện */}
           <button className="h-12 w-12 border-2 border-gray-300 rounded-full overflow-hidden hover:ring-2 hover:ring-blue-200 transition duration-300">
             <img src={avt} alt="Profile" className="w-full h-full object-cover" />
           </button>
         </div>
 
-
         <ul style={{ height: '40px' }}></ul>
       </div>
       {/* Center: Navigation Links */}
       <div className="h-[64px] absolute left-1/2 transform -translate-x-1/2 top-0 w-fit flex justify-center">
         <ul className="hidden md:flex flex-row justify-center gap-3">
-          {menuItems.map(({ icon: Icon }, index) => (
+          {menuItems.map(({ icon: Icon, namepage }, index) => (
             <div className='flex items-center py-2 '> {/* border-b-4 border-blue-500*/}
-              <button key={index} className="group flex items-center hover:bg-gray-200 w-24 h-full justify-center rounded-md transition-colors duration-200">
+              <LinkTo key={index} namepage={namepage} css='group flex items-center hover:bg-gray-200 w-24 h-full justify-center rounded-md transition-colors duration-200'>
                 <div className="flex items-center justify-center h-10 w-10">
                   <Icon className="h-6 w-6 text-gray-600 transition-colors duration-200 group-hover:text-blue-500 stroke-[1.5]" />
                 </div>
-              </button>
+              </LinkTo>
             </div>
+
           ))}
         </ul>
-      </div>
+      </div >
 
       {/* Dropdown Menu */}
-      {isDropdownVisible && !isSearchVisible && (
-        <div ref={dropdownRef} className="absolute top-12 right-0 w-48 bg-white shadow-md p-4 rounded-md transition-opacity duration-200">
-          <ul className="flex flex-col gap-1">
-            {menuItems.map(({ icon: Icon, label }, index) => (
-              <li key={index} className="flex items-center gap-2 p-2 hover:bg-blue-200 rounded-md transition-colors">
-                <Icon className="h-6 w-6 " />
-                <span className="text-gray-700">{label}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </nav>
+      {
+        isDropdownVisible && !isSearchVisible && (
+          <div ref={dropdownRef} className="absolute top-12 right-0 w-48 bg-white shadow-md p-4 rounded-md transition-opacity duration-200">
+            <ul className="flex flex-col gap-1">
+              {menuItems.map(({ icon: Icon, label, namepage }, index) => (
+                <LinkTo key={index} namepage={namepage} css='flex items-center gap-2 p-2 hover:bg-blue-200 rounded-md transition-colors'>
+                  <Icon className="h-6 w-6 " />
+                  <span className="text-gray-700">{label}</span>
+                </LinkTo>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+    </nav >
   );
 };
 

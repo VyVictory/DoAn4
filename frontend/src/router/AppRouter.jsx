@@ -17,7 +17,7 @@ const AppRouter = () => {
       <Routes>
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/" element={<UserPage />} />
-        <Route path="/messanges" element={<Messages />} />
+        <Route path="/messages" element={<Messages />} />
         {/* <Route path="/contact" element={<ContactPage />} /> */}
       </Routes>
     </>
