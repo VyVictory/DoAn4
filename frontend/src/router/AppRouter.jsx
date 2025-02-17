@@ -4,7 +4,7 @@ import '../styles/tailwind.css';
 import AdminPage from '../pages/AdminPage';
 import UserPage from '../pages/UserPage';
 import AboutPage from '../pages/AboutPage';
-import ContactPage from '../pages/ContactPage';
+import Messages from '../pages/Messages.jsx';
 import NavBar from '../components/NavBar.jsx';
 
 const AppRouter = () => {
@@ -17,8 +17,8 @@ const AppRouter = () => {
       <Routes>
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/" element={<UserPage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/messanges" element={<Messages />} />
+        {/* <Route path="/contact" element={<ContactPage />} /> */}
       </Routes>
     </>
   );
