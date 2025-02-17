@@ -6,7 +6,7 @@ import { ArrowLeftIcon } from "@heroicons/react/24/outline"; // Import icon
 const Messages = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isRightbarOpen, setRightbarOpen] = useState(false);
-  const [isRightbarOpen1, setRightbarOpen1] = useState(false);
+  const [isRightbarOpen1, setRightbarOpen1] = useState(true);
   const MessMenuLeft = useRef(null);
   const MessMenuRight = useRef(null);
 

@@ -12,8 +12,10 @@ import { ArrowLeftIcon, ChatBubbleLeftIcon, BellIcon } from "@heroicons/react/24
 import logo from '../logo.webp';
 import avt from '../img/DefaultAvatar.jpg'
 import LinkTo from './LinkTo';
+import { useAuth } from './AuthProvider';
 
 const NavBar = () => {
+  const { showLogin, setShowLogin } = useAuth();
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const dropdownRef = useRef(null);
@@ -81,9 +83,9 @@ const NavBar = () => {
       setWidth(inputSearchRef.current.offsetWidth); // Set the initial width dynamically
     }
   }, []);
-
+  console.log(showLogin)
   return (
-    <nav className="HighNavbar bg-white shadow-md fixed w-screen flex justify-items-center z-50"
+    <nav className="HighNavbar bg-white shadow-md fixed w-screen flex justify-items-center z-40"
       style={{ minWidth: 'screen' }}
     >
       <div className="flex w-[100%] ">
@@ -160,7 +162,9 @@ const NavBar = () => {
           <LinkTo namepage="notification" css="bg-gray-100 p-2 rounded-full hover:bg-blue-100 hover:ring-2 hover:ring-blue-200 transition duration-300">
             <BellIcon className="h-7 w-7 text-gray-700 hover:text-blue-500 transition" />
           </LinkTo>
-          <button className="h-12 w-full aspect-square border-2 border-gray-300 rounded-full overflow-hidden hover:ring-2 hover:ring-blue-200 transition duration-300">
+          <button
+            onClick={() => setShowLogin(true)}
+            className="h-12 w-full aspect-square border-2 border-gray-300 rounded-full overflow-hidden hover:ring-2 hover:ring-blue-200 transition duration-300">
             <img src={avt} alt="Profile" className="w-full h-full object-cover" />
           </button>
         </div>
