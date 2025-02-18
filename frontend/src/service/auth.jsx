@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Tạo một instance của Axios với base URL
 const api = axios.create({
-    baseURL: 'http://localhost:3001/auth',
+    baseURL: 'https://doan4-5by5.onrender.com/auth',
     headers: {
         'Content-Type': 'application/json',
     },
