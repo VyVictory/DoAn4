@@ -15,3 +15,25 @@
 body {
     font-family: 'Roboto', sans-serif;
 }
+
+@keyframes marquee {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.input-placeholder {
+    overflow: hidden;
+    white-space: nowrap;
+    display: block;
+}
+
+.input-placeholder::placeholder {
+    animation: marquee 10s linear infinite;
+    display: inline-block;
+    width: 100%;
+}

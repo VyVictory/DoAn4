@@ -6,11 +6,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import AppRouter from './router/AppRouter';
 import { AuthProvider } from './components/AuthProvider';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 ReactDOM.render(
   <React.StrictMode>
     <AuthProvider>
-      <AppRouter />
+      <GoogleOAuthProvider clientId="203504945599-3v9h0goil9ni43kamqesphfrarjfu440.apps.googleusercontent.com">
+        <AppRouter />
+      </GoogleOAuthProvider>
     </AuthProvider>
   </React.StrictMode>,
   document.getElementById('root')

@@ -84,7 +84,7 @@ const Messages = () => {
 
             </div>
           </div>
-          <div className="p-2 flex space-x-2 bg-white shadow-md rounded-lg overflow-x-auto justify-center">
+          <div className="p-2 flex space-x-2 bg-white shadow-sm rounded-lg overflow-x-auto ">
             {/* Nút menu */}
             <button className="flex items-center space-x-2 bg-gray-100 text-gray-700 rounded-3xl px-4 py-2 shadow-sm 
                      hover:bg-violet-100 hover:scale-105 transition-all duration-300 ease-in-out">

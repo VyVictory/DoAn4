@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import NotificationCss from '../components/NotificationCss';
-import { XMarkIcon } from '@heroicons/react/24/solid'; // Import icon
+import { XMarkIcon } from '@heroicons/react/24/solid';
 import { useAuth } from '../components/AuthProvider';
-export default function Login() {
-      const { showLogin, setShowLogin } = useAuth();
-    const [formData, setFormData] = useState({
-        // numberPhone: '0372830048',
-        // password: 'Adsads1234@#',
-    });
+import { login } from '../service/auth';
 
+export default function Login({ chaneform }) {
+    const { setShowLogin } = useAuth();
+    const [formData, setFormData] = useState({
+        identifier: '',
+        password: '',
+    });
     const [errors, setErrors] = useState({});
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const validateForm = () => {
@@ -31,35 +31,26 @@ export default function Login() {
         return validationErrors;
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = async () => {
         const validationErrors = validateForm();
         if (Object.keys(validationErrors).length === 0) {
+            setLoading(true);
             try {
-                // Determine if the identifier is an email or phone number
                 const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.identifier);
-
-                // Dynamically construct the request payload
                 const requestData = isEmail
                     ? { email: formData.identifier, password: formData.password }
                     : { numberPhone: formData.identifier, password: formData.password };
 
-                // Send login request
-                const response = await axios.post(` /user/login`, requestData);
+                // Call the login function from service.js
+                const { token, user } = await login(requestData);
 
-                if (response.status === 201) {
-                    // Save the token
-                    toast.success('Đăng nhập thành công! Chào mừng bạn trở lại.', NotificationCss.Success);
-                    //   setTimeout(() => navigate('/fixconnectsocket'), 1000); // Redirect after 2 seconds
-                } else {
-                    toast.error('Đăng nhập thất bại, vui lòng thử lại.', NotificationCss.Fail);
-                }
+                toast.success(`Đăng nhập thành công! Chào mừng bạn, ${user.name}.`, { autoClose: 2000 });
+                navigate('/'); // Redirect to the dashboard after successful login
+                setShowLogin(false);
             } catch (error) {
-                console.error('Lỗi:', error.response?.data || error.message);
-                toast.error(
-                    'Đăng nhập thất bại, vui lòng thử lại',
-                    NotificationCss.Fail
-                );
+                toast.error(error.message || 'Đăng nhập thất bại, vui lòng thử lại.', { autoClose: 3000 });
+            } finally {
+                setLoading(false);
             }
         } else {
             setErrors(validationErrors);
@@ -72,7 +63,6 @@ export default function Login() {
             ...formData,
             [name]: value,
         });
-        // Clear the error message for the field being edited
         setErrors({
             ...errors,
             [name]: '',
@@ -80,19 +70,17 @@ export default function Login() {
     };
 
     return (
-        <div className="h-screen w-screen absolute z-50 bg-black bg-opacity-50 transition-opacity flex items-center justify-center">
-            <div className='max-w-md w-full px-5 flex relative'>
-                {/* Close Button */}
+        <div className='w-full h-full flex justify-center items-center'>
+            <div
+                className="bg-white shadow-lg shadow-gray-500 rounded-2xl w-full my-4 max-w-sm"
+            >
                 <button
                     onClick={() => setShowLogin(false)}
-                    className="absolute top-2 right-6 text-gray-500 hover:text-gray-700"
+                    className="w-full flex justify-end top-2 right-6 text-gray-500 hover:text-gray-700"
                 >
                     <XMarkIcon className="h-8 w-8" />
                 </button>
-                <form
-                    onSubmit={handleSubmit}
-                    className="bg-white shadow-lg shadow-gray-500 rounded-2xl p-10 w-full"
-                >
+                <div className='p-10'>
                     <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">Đăng nhập</h1>
 
                     <div className="mb-5">
@@ -124,51 +112,30 @@ export default function Login() {
                         />
                         {errors.password && <p className="text-red-500 text-sm mt-2">{errors.password}</p>}
                     </div>
+
                     <Link to="/forgotpass" className="float-right text-sm text-blue-500 hover:underline mb-2">
                         Quên mật khẩu?
                     </Link>
-                    <button
-                        onClick={handleSubmit}
-                        className="w-full py-3 text-white font-semibold bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg shadow-lg hover:from-blue-600 hover:to-purple-600 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300"
-                    >
-                        Đăng nhập
-                    </button>
-                    <div className="flex items-center justify-between mt-3 mb-4 text-nowrap ">
-                        <label htmlFor="password" className="block text-gray-600 text-sm font-medium mr-1">
-                            <Link className="text-sm text-gray-400 hover:underline">
-                                Chưa có tài khoản?
-                            </Link>
-                        </label>
-                        <label htmlFor="password" className="block text-gray-600 text-sm font-medium">
-                            <Link to="/register" className="text-sm text-blue-500 hover:underline">
-                                Đăng ký ngay
-                            </Link>
-                        </label>
 
+                    <button
+                        onClick={()=>handleSubmit()}
+                        type="submit"
+                        className="w-full py-3 text-white font-semibold bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg shadow-lg hover:from-blue-600 hover:to-purple-600 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300"
+                        disabled={loading}
+                    >
+                        {loading ? 'Đang xử lý...' : 'Đăng nhập'}
+                    </button>
+
+                    <div className="flex items-center justify-between mt-3 mb-4 text-nowrap">
+                        <div className="text-sm text-gray-400 hover:underline">Chưa có tài khoản?</div>
+                        <button
+                            onClick={() => chaneform('register')}
+                            className="text-sm text-blue-500 hover:underline">
+                            Đăng ký ngay
+                        </button>
                     </div>
-                    <div className=''>
-                        <div className="flex items-center justify-between mt-1">
-                            <div className='border-t border-gray-300 w-full'>
-                            </div>
-                            <span className="text-sm text-gray-600 px-3 text-center">hoặc</span>
-                            <div className='border-t border-gray-300 w-full'>
-                            </div>
-                        </div>
-                        <div className="flex justify-center mt-4">
-                            <button
-                                type="button"
-                                className="flex items-center gap-2 py-2 px-4 border border-yellow-400 text-yellow-500 font-semibold rounded-lg hover:bg-yellow-100"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 488 512">
-                                    <path d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z" />
-                                </svg>
-                                GOOGLE
-                            </button>
-                        </div>
-                    </div>
-                </form>
+                </div>
             </div>
-            <ToastContainer position="top-right" autoClose={3000} limit={3} />
-        </div >
+        </div>
     );
 }
