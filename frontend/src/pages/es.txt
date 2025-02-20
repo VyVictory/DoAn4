@@ -1,0 +1,8 @@
+cập nhật thông tin cá nhân(giới thiệu, bảo mật), tìm kiếm người dùng , kết bạn , xem thông tin sơ bộ về người dùng ,  đăng bài , like share bài viết , comment ,
+nhắn tin(thu hồi tin nhắn) , thông báo nhắn tin(tắc thông báo) , tạo nhóm nhắn tin , nhắn tin nhóm(tắc thông báo, thu hồi) ,công cụ truy cập nhanh
+tạo nhóm đăng bài ,  follow, thông báo bài viết folow mới, thông báo hệ thống ,đăng bài nhóm , report-post, report-user,report-group
+admin-quản lý user, admin-quản lý report post(block post, unblock post),admin-quản lý report user(ban,unban), admin-quản lý report group(xem tin nhắn group, xóa group),
+story(tạo story, xem story), book mart, block user, 
+
+
+

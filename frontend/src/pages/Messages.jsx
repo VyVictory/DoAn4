@@ -220,6 +220,7 @@ const Messages = () => {
               </div>
             </div>
             {divs}
+            <div className=''></div>
           </div>
         </div>
         {/* Chat input */}
