@@ -1,6 +1,6 @@
 import NavBar from "../components/NavBar";
 import { Outlet } from 'react-router-dom';
-import Login from "../pages/Login";
+import Login from "../components/Auth/Login";
 const Layout = () => {
 
     return (

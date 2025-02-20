@@ -3,8 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { XMarkIcon } from '@heroicons/react/24/solid';
-import { useAuth } from '../components/AuthProvider';
-import { login } from '../service/auth';
+import { useAuth } from '../AuthProvider';
+import { login } from '../../service/auth';
 
 export default function Login({ chaneform }) {
     const { setShowLogin } = useAuth();
@@ -72,13 +72,13 @@ export default function Login({ chaneform }) {
     return (
         <div className='w-full h-full flex justify-center items-center'>
             <div
-                className="bg-white shadow-lg shadow-gray-500 rounded-2xl w-full my-4 max-w-sm"
+                className="bg-white shadow-lg shadow-gray-500 rounded-lg w-full my-4 max-w-sm"
             >
                 <button
                     onClick={() => setShowLogin(false)}
                     className="w-full flex justify-end top-2 right-6 text-gray-500 hover:text-gray-700"
                 >
-                    <XMarkIcon className="h-8 w-8" />
+                    <XMarkIcon className="h-8 w-8 hover:bg-red-200 rounded-lg" />
                 </button>
                 <div className='p-10'>
                     <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">Đăng nhập</h1>
@@ -98,7 +98,7 @@ export default function Login({ chaneform }) {
                         {errors.identifier && <p className="text-red-500 text-xs mt-2">{errors.identifier}</p>}
                     </div>
 
-                    <div className="mb-5">
+                    <div className="mb-3">
                         <label htmlFor="password" className="block text-gray-600 text-sm font-medium">
                             Mật khẩu
                         </label>

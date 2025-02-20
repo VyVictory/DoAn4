@@ -1,4 +1,3 @@
-import './styles/tailwind.css';
 import './index.css';
 import 'typeface-roboto';
 import 'typeface-open-sans';

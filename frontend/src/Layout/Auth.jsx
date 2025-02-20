@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-
-import { XMarkIcon } from '@heroicons/react/24/solid';
 import { useAuth } from '../components/AuthProvider';
-import Login from '../pages/Login';
-import Register from '../pages/Register';
+import Login from '../components/Auth/Login';
+import Register from '../components/Auth/Register';
 
 export default function Auth() {
     const { showLogin, setShowLogin } = useAuth();
@@ -27,7 +25,8 @@ export default function Auth() {
     };
 
     return (
-        <div className=" w-screen min-h-screen absolute z-50 bg-black bg-opacity-50 transition-opacity flex items-center justify-center ">
+        <div className=" w-screen 
+        min-h-screen absolute z-50 bg-black bg-opacity-50 transition-opacity flex items-center justify-center ">
           
             <div className="overflow-y-auto h-screen w-full px-4 max-w-md  ">
                 {renderForm()}

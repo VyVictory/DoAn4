@@ -1,26 +1,24 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
-import '../styles/tailwind.css';
+
+import Layout from '../Layout/Layout.jsx';
+import Auth from '../Layout/Auth.jsx'
+
 import AdminPage from '../pages/AdminPage';
 import UserPage from '../pages/UserPage';
 import Messages from '../pages/Messages.jsx';
-import Layout from './Layout.jsx';
-import Login from '../pages/Login.jsx';
 import { useAuth } from '../components/AuthProvider.jsx';
-import Register from '../pages/Register.jsx';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Auth from './Auth.jsx';
+
 const AppRouter = () => (
   <Routes>
     <Route element={<Layout />}>
       <Route path="/" element={<UserPage />} />
       <Route path="/messages" element={<Messages />} />
-      <Route path="/login" element={<Login />} />
       {/* Các route khác */}
     </Route>
     <Route path="/admin" element={<AdminPage />} />
-    <Route path="/register" element={<Register />} />
   </Routes>
 );
 
