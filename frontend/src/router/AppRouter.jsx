@@ -6,7 +6,7 @@ import Auth from '../Layout/Auth.jsx'
 
 import AdminPage from '../pages/AdminPage';
 import UserPage from '../pages/UserPage';
-import Messages from '../pages/Messages.jsx';
+import Messages from '../pages/messager/Messages.jsx';
 import { useAuth } from '../components/AuthProvider.jsx';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

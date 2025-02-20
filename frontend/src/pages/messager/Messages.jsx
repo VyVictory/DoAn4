@@ -4,10 +4,11 @@ import {
   ExclamationCircleIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/solid";
-import UseClickOutside from "../components/UseClickOutside";
+import UseClickOutside from "../../components/UseClickOutside";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline"; // Import icon
-import { ArrowLeftIcon } from "@heroicons/react/24/outline"; // Import icon
-import { FriendIcon, GroupIcon, NewsIcon } from "../css/icon";
+import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline"; // Import icon
+import { FriendIcon, GroupIcon, NewsIcon } from "../../css/icon";
+import ChatMessages from "./ChatMessages";
 const Messages = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isRightbarOpen, setRightbarOpen] = useState(false);
@@ -60,12 +61,12 @@ const Messages = () => {
   UseClickOutside(MessMenuRight, () => setRightbarOpen(false));
 
   const sidebarClass = `NavbarUser z-20 bg-white bg-transparent transition-all duration-500 ease-in-out ${
-    isSidebarOpen ? "w-64 h-full " : "w-0 h-full"
-  } lg:w-[360px] absolute lg:relative`;
+    isSidebarOpen ? "w-[360px] h-full " : "w-0 h-full"
+  } lg:w-[360px] fixed lg:relative`;
   const rightbarClass = `NavbarUser z-20 bg-white transition-all duration-500 ease-in-out right-0 ${
-    isRightbarOpen ? "w-64 h-full " : "w-0 h-full"
-  } lg:w-[360px] absolute lg:relative`;
-  const [searchText, setSearchText] = useState("");
+    isRightbarOpen ? "w-[360px] h-full " : "w-0 h-full"
+  } lg:w-[360px] fixed lg:relative`;
+  const [searchText, setSearchText] = useState(false);
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
@@ -75,38 +76,51 @@ const Messages = () => {
             isSidebarOpen ? "block" : "hidden lg:block"
           } border-r shadow-2xl border-x-gray-300 h-full `}
         >
-          <div className="p-2">
-            <h2 className="text-2xl font-semibold">Đoạn chat</h2>
+          <div className="p-2 flex justify-between items-center relative">
+            <h2 className="text-2xl font-semibold w-full absolute text-center">
+              Đoạn chat
+            </h2>
+            <div className=" w-full  justify-end flex relative z-10 h-8">
+              <ArrowLeftIcon
+                onClick={() => setSidebarOpen((prevState) => !prevState)}
+                className="h-8 lg:hidden hover:scale-125 text-blue-500 bg-violet-200 active:bg-violet-400 hover:bg-violet-300 rounded-3xl p-1 cursor-pointer"
+              />
+            </div>
           </div>
+
           {/* Phần trên: Logo và ô tìm kiếm */}
-          <div className="flex items-center max-h-12 justify-center pl-2 pr-4 space-x-2 w-full rounded-lg  pb-1">
+          <div className="flex items-center max-h-12 justify-center px-4 space-x-2 w-full rounded-lg  pb-1">
             {/* Chỉ hiển thị nếu có nội dung nhập vào */}
             {searchText && (
-              <button className="h-10 w-10 px-2 flex items-center justify-center hover:bg-violet-100 rounded-full transition duration-200 ease-in-out">
-                <ArrowLeftIcon
-                  onClick={() => {
-                    setSearchText("");
-                  }}
-                  className="h-6 w-6 hover:scale-125 text-blue-500"
-                />
+              <button
+                onClick={() => {
+                  setSearchText(false);
+                }}
+                className="h-10 w-10 px-2 flex items-center justify-center hover:bg-violet-100 rounded-full transition duration-200 ease-in-out"
+              >
+                <ArrowLeftIcon className="h-6 w-6 hover:scale-125 text-blue-500" />
               </button>
             )}
 
             {/* Ô tìm kiếm */}
-            <div className="flex items-center w-full max-w-lg bg-violet-100 rounded-2xl shadow-sm pl-2">
-              <button className="h-10 w-10 hover:scale-125 justify-center text-violet-300 hover:text-violet-700 rounded-full transition duration-200 ease-in-out">
+            <div className="flex items-center w-full max-w-lg bg-violet-100 rounded-3xl shadow-sm pl-2 transition duration-300 ease-in-out">
+              <button className="h-10 w-10 hover:scale-125 justify-center text-violet-300 hover:text-violet-700 rounded-full transition duration-300 ease-in-out">
                 <MagnifyingGlassIcon className="max-h-6" />
               </button>
               <input
                 type="text"
                 placeholder="Tìm kiếm trên ZaFaCook"
+                onClick={() => {
+                  if (searchText == "") {
+                    setSearchText(" ");
+                  }
+                }}
                 className="w-full h-10 pr-2 pl-1 text-gray-700 bg-transparent outline-none rounded-full focus:ring-0 transition duration-300 ease-in-out"
-                value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
               />
             </div>
           </div>
-          <div className="p-2 flex space-x-2 bg-white shadow-sm rounded-lg overflow-x-scroll  pb-3">
+          <div className="p-2 flex space-x-2 bg-white shadow-sm rounded-lg overflow-x-auto  pb-3 mx-4">
             {/* Nút menu */}
             <button className="flex items-center space-x-2 bg-gray-100 text-gray-700 rounded-3xl px-4 py-2 shadow-sm hover:bg-violet-100 hover:scale-105 active:bg-violet-200 active:scale-105 transition-all duration-300 ease-in-out">
               <FriendIcon />
@@ -119,6 +133,10 @@ const Messages = () => {
             <button className="flex items-center space-x-2 bg-gray-100 text-gray-700 rounded-3xl px-4 shadow-sm hover:bg-orange-100 hover:scale-105 active:bg-orange-200 active:scale-105 transition-all duration-300 ease-in-out">
               <NewsIcon />
               <span className="text-sm font-medium">Tin</span>
+            </button>
+            <button className="flex items-center space-x-2 bg-gray-100 text-gray-700 rounded-3xl px-4 shadow-sm hover:bg-orange-100 hover:scale-105 active:bg-orange-200 active:scale-105 transition-all duration-300 ease-in-out">
+              ...
+              <span className="text-sm font-medium">More</span>
             </button>
           </div>
 
@@ -162,26 +180,31 @@ const Messages = () => {
           </div>
           {/* nhỏ thì hiện */}
           <div className="flex items-center justify-center">
-            <button className="lg:block hidden">
-              <ExclamationCircleIcon
-                onClick={() => setRightbarOpen1(!isRightbarOpen1)}
-                className="h-8 w-8 p-1 hover:bg-gray-200 hover:text-blue-700 rounded-full text-blue-500"
-              />
-            </button>
+            {!isRightbarOpen && (
+              <button className="lg:block hidden">
+                <ExclamationCircleIcon
+                  onClick={() => setRightbarOpen1(!isRightbarOpen1)}
+                  className="h-8 w-8 p-1 hover:bg-gray-200 hover:text-blue-700 rounded-full text-blue-500"
+                />
+              </button>
+            )}
           </div>
         </div>
         <div className="flex-1 p-4 bg-gray-100 overflow-y-auto">
           {/* Tin nhắn thử */}
           <div className="space-y-4">
-            <div className="flex space-x-4">
+            {/* <div className="flex space-x-4">
               <div className="bg-blue-500 text-white p-2 rounded-md max-w-xs">
                 Chào bạn! Tôi có thể giúp gì cho bạn hôm nay?
               </div>
-            </div>
+            </div> */}
             {divs}
-            <div className=""></div>
+            <ChatMessages
+              messages={["Xin chào!", "Bạn khỏe không?", "Hôm nay bạn làm gì?"]}
+            />
           </div>
         </div>
+
         {/* Chat input */}
         <div className="shadow-sm border-t flex items-center p-2 bg-white">
           <div className="flex items-center flex-row space-x-1 pr-2">
@@ -286,11 +309,14 @@ const Messages = () => {
         <div ref={MessMenuRight} className={rightbarClass}>
           <div
             className={`${
-              isRightbarOpen ? "block" : "hidden lg:block"
+              isRightbarOpen ? "" : "hidden lg:block"
             } border-l shadow-xl h-full`}
           >
-            <h2 className="text-lg font-semibold">Thông tin</h2>
-            <p className="mt-4">Chi tiết người dùng...</p>
+            <div className="p-2 flex justify-between items-center">
+              <h2 className=" w-full  text-center text-2xl font-semibold">
+                Thông tin
+              </h2>
+            </div>
           </div>
         </div>
       )}
