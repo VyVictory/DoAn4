@@ -10,12 +10,14 @@ import Messages from '../pages/messager/Messages.jsx';
 import { useAuth } from '../components/AuthProvider.jsx';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Profile from '../pages/profile/profile.jsx';
 
 const AppRouter = () => (
   <Routes>
     <Route element={<Layout />}>
       <Route path="/" element={<UserPage />} />
       <Route path="/messages" element={<Messages />} />
+      <Route path="/profile" element={<Profile />} />
       {/* Các route khác */}
     </Route>
     <Route path="/admin" element={<AdminPage />} />

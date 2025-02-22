@@ -114,8 +114,8 @@ const NavBar = () => {
               </button>
             ) : (
               <button className="w-10 h-10 ">
-                  <img className=" w-10 rounded-full" src={logo} alt="" />
-                </button>
+                <img className=" w-10 rounded-full" src={logo} alt="" />
+              </button>
             )}
             {/* Ô tìm kiếm */}
             <div

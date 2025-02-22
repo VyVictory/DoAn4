@@ -52,15 +52,17 @@ const AvatarDropdown = ({ avt }) => {
       {/* Dropdown Menu */}
       {isOpen && (
         <div className="absolute right-0 mt-14 z-10 divide-y bg-white rounded-lg shadow-lg shadow-gray-500">
-          <div className="px-4 py-3 flex flex-row justify-center items-center space-x-2">
+          <a
+          href="/profile"
+          className="px-4 py-3 flex flex-row justify-center items-center space-x-2">
             <button className="w-10 h-10 flex justify-center items-center">
               <img className="rounded-full" src={avt} alt="user photo" />
             </button>
-            <div className="text-sm max-w-64">
-              <div className="font-medium">{profile.name}</div>
+            <div className="text-sm max-w-64 ">
+              <div className="font-medium text-start">{profile.name}</div>
               <div className="truncate">{profile.email}</div>
             </div>
-          </div>
+          </a>
           <ul className="py-2 text-sm">
             <li>
               <a href="#" className="block px-4 py-2 hover:bg-gray-100">
