@@ -1,16 +1,17 @@
 import mongoose from "mongoose";
-import { v4 as uuidv4 } from 'uuid';
+
 const userSchema = new mongoose.Schema(
   {
-    _id: { type: String, required: true, unique: true, default: uuidv4 },
+    _id: { type: mongoose.Schema.Types.ObjectId, auto: true }, // Chuyển về ObjectId tự động
     name: { type: String, required: true },
-    email: { type: String, required: true },
+    email: { type: String, required: true, unique: true, trim: true },
     password: { type: String, required: true },
-    avatar: { type: String, required: false },
+    avatar: { type: String, default: "" },
     birthDate: { type: Date, required: true },
     gender: { type: String, enum: ["Male", "Female", "Other"], required: true },
   },
   { timestamps: true }
 );
+
 const User = mongoose.model("User", userSchema);
 export default User;

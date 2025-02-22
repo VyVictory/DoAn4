@@ -16,13 +16,13 @@ export const register = async (req, res) => {
     if (!name || !email || !password || !birthDate || !gender) {
       return res.status(400).json({ message: "All fields are required" });
     }
-    
+
     // email = email.trim().toLowerCase(); // Chuẩn hóa email
 
     // 🔍 Kiểm tra email đã tồn tại hay chưa
     const existingUser = await User.findOne({ email }); // Dùng lean() để tối ưu hiệu suất
     if (existingUser) {
-        console.log(existingUser)
+      console.log(existingUser);
       return res.status(400).json({ message: "Email already in use" });
     }
 
@@ -39,16 +39,20 @@ export const register = async (req, res) => {
     });
 
     await newUser.save();
-
-    res.status(201).json({
-      message: "User registered successfully",
-      user: {
+    const token = jwt.sign(
+      {user: {
         _id: newUser._id,
         name: newUser.name,
         email: newUser.email,
         birthDate: newUser.birthDate,
         gender: newUser.gender,
-      },
+      } },
+      SECRET_KEY,
+      { expiresIn: "1h" }
+    );
+    res.status(201).json({
+      message: "User registered successfully",
+      token,
     });
   } catch (error) {
     console.error("❌ Registration error:", error);
