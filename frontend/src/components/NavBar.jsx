@@ -11,6 +11,7 @@ import {
   ArrowLeftIcon,
   ChatBubbleLeftIcon,
   BellIcon,
+  ArrowPathIcon,
 } from "@heroicons/react/24/outline"; // Import icon
 import logo from "../logo.webp";
 import avt from "../img/DefaultAvatar.jpg";
@@ -18,7 +19,7 @@ import LinkTo from "./LinkTo";
 import { useAuth } from "./AuthProvider";
 
 const NavBar = () => {
-  const { showLogin, setShowLogin } = useAuth();
+  const { showLogin, setShowLogin, profile, isLoadingProfile } = useAuth();
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const dropdownRef = useRef(null);
@@ -82,11 +83,10 @@ const NavBar = () => {
 
   // Update width on render
   useEffect(() => {
-    if (inputSearchRef.current && inputSearchRef.current>= 234.913) {
+    if (inputSearchRef.current && inputSearchRef.current >= 234.913) {
       setWidth(inputSearchRef.current.offsetWidth); // Set the initial width dynamically
     }
   }, []);
-  console.log(showLogin);
   return (
     <nav
       className="HighNavbar bg-white shadow-md fixed w-screen flex justify-items-center z-40"
@@ -130,8 +130,7 @@ const NavBar = () => {
                   className={`h-10 w-10 stroke-gray-300 p-2 bg-slate-100 hover:stroke-violet-400
         ${
           isSearchVisible ? "rounded-l-full " : "rounded-full lg:rounded-r-none"
-        }
-         `}
+        }`}
                 />
               </button>
               <div
@@ -181,16 +180,29 @@ const NavBar = () => {
           >
             <BellIcon className="h-7 w-7 text-gray-700 hover:text-blue-500 transition" />
           </LinkTo>
-          <button
-            onClick={() => setShowLogin(true)}
-            className="h-12 w-full aspect-square border-2 border-gray-300 rounded-full overflow-hidden hover:ring-2 hover:ring-blue-200 transition duration-300"
-          >
-            <img
-              src={avt}
-              alt="Profile"
-              className="w-full h-full object-cover"
-            />
-          </button>
+          {isLoadingProfile ? (
+            <ArrowPathIcon className="h-12 w-12 text-gray-400 animate-spin" />
+          ) : profile === undefined ? (
+            <div className="h-12 w-12 bg-gray-300 rounded-full animate-pulse"></div> // Skeleton UI khi chưa có profile
+          ) : profile ? (
+            <button
+              onClick={() => setShowLogin(true)}
+              className="h-12 w-12 border-2 border-gray-300 rounded-full overflow-hidden hover:ring-2 hover:ring-blue-200 transition duration-300"
+            >
+              <img
+                src={avt}
+                alt="Profile"
+                className="w-full h-full object-cover"
+              />
+            </button>
+          ) : (
+            <button
+              onClick={() => setShowLogin(true)}
+              className="px-4 py-1 border rounded-md bg-violet-50 border-none  hover:bg-violet-200 transition"
+            >
+              Đăng nhập
+            </button>
+          )}
         </div>
 
         <ul style={{ height: "40px" }}></ul>

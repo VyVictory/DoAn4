@@ -25,13 +25,10 @@ export default function Auth() {
     };
 
     return (
-        <div className=" w-screen 
-        min-h-screen absolute z-50 bg-black bg-opacity-50 transition-opacity flex items-center justify-center ">
-          
-            <div className="overflow-y-auto h-screen w-full px-4 max-w-md  ">
+        <div className=" w-screen min-h-screen absolute z-50 bg-black bg-opacity-50 transition-opacity flex items-center justify-center ">
+            <div className="overflow-y-auto h-screen w-full px-4 max-w-md">
                 {renderForm()}
             </div>
-           
         </div>
     );
 }

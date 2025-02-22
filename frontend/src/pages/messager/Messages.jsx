@@ -120,7 +120,7 @@ const Messages = () => {
               />
             </div>
           </div>
-          <div className="p-2 flex space-x-2 bg-white shadow-sm rounded-lg overflow-x-auto  pb-3 mx-4">
+          <div className="p-2 flex space-x-2 bg-white shadow-sm rounded-lg overflow-x-auto  pb-3 mx-2">
             {/* Nút menu */}
             <button className="flex items-center space-x-2 bg-gray-100 text-gray-700 rounded-3xl px-4 py-2 shadow-sm hover:bg-violet-100 hover:scale-105 active:bg-violet-200 active:scale-105 transition-all duration-300 ease-in-out">
               <FriendIcon />
@@ -134,12 +134,7 @@ const Messages = () => {
               <NewsIcon />
               <span className="text-sm font-medium">Tin</span>
             </button>
-            <button className="flex items-center space-x-2 bg-gray-100 text-gray-700 rounded-3xl px-4 shadow-sm hover:bg-orange-100 hover:scale-105 active:bg-orange-200 active:scale-105 transition-all duration-300 ease-in-out">
-              ...
-              <span className="text-sm font-medium">More</span>
-            </button>
           </div>
-
           <ul className=" space-y-2">
             <li>
               <div></div>
@@ -313,6 +308,12 @@ const Messages = () => {
             } border-l shadow-xl h-full`}
           >
             <div className="p-2 flex justify-between items-center">
+              <div className=" w-full flex z-10 h-8 absolute">
+                <ArrowRightIcon
+                  onClick={() => setRightbarOpen((prevState) => !prevState)}
+                  className="h-8 lg:hidden hover:scale-125 text-blue-500 bg-violet-200 active:bg-violet-400 hover:bg-violet-300 rounded-3xl p-1 cursor-pointer"
+                />
+              </div>
               <h2 className=" w-full  text-center text-2xl font-semibold">
                 Thông tin
               </h2>

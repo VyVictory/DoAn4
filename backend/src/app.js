@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import authRoutes from './routes/auth.js'; 
-
+import routerUser from './routes/user.js';
 const app = express();
 
 // Enable CORS for your frontend (localhost:3000)
@@ -15,6 +15,7 @@ app.use(cors({
 app.use(express.json());
 
 app.use('/auth', authRoutes);
+app.use('/user', routerUser);
 
 mongoose.connect('mongodb+srv://vyvictory:1234567899@cluster0.vahim.mongodb.net/', {
     useNewUrlParser: true,

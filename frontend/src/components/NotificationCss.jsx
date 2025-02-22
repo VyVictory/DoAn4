@@ -1,7 +1,7 @@
 function Fail() {
     return {
         position: "top-left",
-        autoClose: 1500,
+        autoClose: 500,
         hideProgressBar: false,
         closeOnClick: false,
         pauseOnHover: true,
@@ -14,7 +14,7 @@ function Fail() {
 function Success() {
     return {
         position: "top-left",
-        autoClose: 1500,
+        autoClose: 500,
         hideProgressBar: false,
         closeOnClick: false,
         pauseOnHover: true,

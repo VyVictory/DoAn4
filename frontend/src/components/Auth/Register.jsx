@@ -51,9 +51,12 @@ export default function Register({ chaneform }) {
 
         if (response) {
           toast.success(
-            "Đăng ký thành công! Bạn có thể đăng nhập ngay.",
+            "Đăng ký thành công!",
             NotificationCss.Success
           );
+          setTimeout(() => {
+            window.location.reload(); // 🟢 Reload lại trang sau 500ms để đảm bảo UI cập nhật
+          }, 500);
         }
       } catch (error) {
         console.error("Lỗi:", error);
@@ -84,14 +87,14 @@ export default function Register({ chaneform }) {
 
   return (
     <div className="flex justify-center items-center h-screen w-full bg-transparent">
-      <div className="bg-white shadow-lg shadow-gray-500 rounded-lg w-full max-w-lg my-4 flex flex-col justify-between overflow-y-auto max-h-[90vh]">
+      <div className="bg-white shadow-lg shadow-gray-500 rounded-2xl w-full max-w-lg my-4 flex flex-col justify-between overflow-y-auto max-h-[90vh]">
         <button
           onClick={() => setShowLogin(false)}
-          className="w-full flex justify-end  top-2 right-6 text-gray-500 hover:text-gray-700"
+          className="w-full flex justify-end  top-2 right-6 text-gray-500 hover:text-gray-700 p-2"
         >
           <XMarkIcon className="h-8 w-8 hover:bg-red-200 rounded-lg" />
         </button>
-        <div className="pb-2 px-5 md:px-8">
+        <div className="pb-4 px-5 md:px-8">
           <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
             Đăng ký
           </h1>
