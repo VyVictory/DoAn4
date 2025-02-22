@@ -13,8 +13,8 @@ export const AuthProvider = ({ children }) => {
     setIsLoadingProfile(true); // 🟢 Bắt đầu tải profile
     try {
       const userData = await getProfile();
-      console.log(userData.user.user);
-      setProfile(userData.user);
+      console.log(userData);
+      setProfile(userData);
     } catch (error) {
       console.error("Error fetching profile:", error);
       setProfile(null);

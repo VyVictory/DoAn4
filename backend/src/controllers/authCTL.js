@@ -10,10 +10,10 @@ const SECRET_KEY = process.env.JWT_SECRET ||"emiton"; // Sử dụng biến môi
 // 🟢 Đăng ký tài khoản
 export const register = async (req, res) => {
   try {
-    let { name, email, password, birthDate, gender } = req.body;
+    let { firstName,lastName, email, password, birthDate, gender } = req.body;
 
     // Kiểm tra dữ liệu nhập vào
-    if (!name || !email || !password || !birthDate || !gender) {
+    if (!firstName || !lastName || !email || !password || !birthDate || !gender) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
@@ -30,10 +30,10 @@ export const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new User({
-      name: name.trim(),
+      firstName: firstName.trim(),
+      lastName:  lastName.trim(),
       email,
       password: hashedPassword,
-      avatar: "",
       birthDate,
       gender,
     });

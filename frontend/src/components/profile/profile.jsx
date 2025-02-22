@@ -1,5 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
-import { useAuth } from "../../components/AuthProvider";
+import { useEffect, useState, useRef } from "react";
+import avt from "../../img/DefaultAvatar.jpg";
+import { useAuth } from "../AuthProvider";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import { Menu } from "@headlessui/react";
 import {
@@ -8,43 +9,44 @@ import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/solid";
 
-import avt from "../../img/DefaultAvatar.jpg";
-const Profile = () => {
+export default function Profile() {
+  const [scrollPhase, setScrollPhase] = useState(0);
   const { profile, isLoadingProfile } = useAuth();
-  const scrollRef = useRef(null);
-
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, []);
-  const detailRef = useRef(null);
+  const leftRef = useRef(null);
   const rightRef = useRef(null);
 
-  const handleScroll = (event) => {
-    const detail = detailRef.current;
-    const right = rightRef.current;
+  useEffect(() => {
+    const handleScroll = () => {
+      const topHeight = document.getElementById("top").offsetHeight;
+      const leftHeight = leftRef.current.offsetHeight;
+      const scrollY = window.scrollY;
 
-    if (window.scrollY < detail.clientHeight) {
-      window.scrollBy(0, event.deltaY);
-      event.preventDefault();
-    } else if (right.scrollTop < right.scrollHeight - right.clientHeight) {
-      right.scrollBy(0, event.deltaY);
-      event.preventDefault();
-    }
-  };
+      if (scrollY < topHeight) {
+        setScrollPhase(0); // Cuộn trong top
+      } else if (scrollY < leftHeight - window.innerHeight) {
+        setScrollPhase(2); // Cuộn trong left
+      } else {
+        setScrollPhase(2); // Cuộn trong right, left giữ nguyên
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <>
-      <div className="NavbarUser h-screen w-screen flex overflow-auto">
+    <div className="NavbarUser flex flex-col w-full">
+      {/* Top Section */}
+      <div id="top" className="min-h20   flex justify-center">
         <div className="w-full  h-full flex items-center flex-col  ">
-          {/* detail  lăn hết thì tới left*/}
-          <button className="relative h-1/2 bg-red-400 w-full rounded-b-lg profileW flex-shrink-0">
+          <div
+            className=" bg-red-400 w-full rounded-b-lg profileW flex-shrink-0"
+            style={{ height: "50vh" }}
+          >
             {/* Lớp phủ màu xám khi hover */}
-            <div></div>
+            <div>a</div>
             <span className="absolute inset-0 bg-black opacity-0 transition-opacity duration-200 hover:opacity-5"></span>
-          </button>
-
+          </div>
           <div className="w-full profileW px-10 z-10">
             <div className="w-full  flex flex-col md:flex-row  md:justify-between justify-center ">
               <div className="flex md:flex-row items-center  md:space-x-3 flex-col">
@@ -118,6 +120,7 @@ const Profile = () => {
             </div>
             <div className="w-full border-b border-gray-300"></div>
           </div>
+
           <div className="w-full  shadow-gray-400 z-10 flex justify-between items-center profileW ">
             <div className="w-full  z-10 py-1 px-10 flex flex-row justify-between">
               <div className="flex flex-row">
@@ -187,42 +190,49 @@ const Profile = () => {
               </button>
             </div>
           </div>
-          <div className="w-full shadow-lg bg-black h-1"></div>
-          {/* left lăn hết mới được lăn right*/}
-          <div className="  py-4   w-full bg-blue-300 flex justify-center">
-            <div className="profileW flex flex-row w-full space-x-4 px-10 justify-center bg-slate-500">
-              <div className="w-1/2 hidden md:block space-y-4">
-                {[...Array(6)].map((_, index) => (
-                  <div
-                    key={index}
-                    className=" bg-white border rounded-md w-full p-3 shadowContent"
-                  >
-                    Helper text # Add an extra helper text to each checkbox
-                    element inside the dropdown menu list with this example.
-                    Helper text # Add an extra helper text to each checkbox
-                    element inside the dropdown menu list with this example.
-                  </div>
-                ))}
-              </div>
-              {/* right khi right lăn không lăn left nữa*/}
-              <div className="flex flex-col w-full space-y-4">
-                {[...Array(32)].map((_, index) => (
-                  <div
-                    key={index}
-                    className=" bg-white border rounded-md w-full p-3 shadowContent"
-                  >
-                    Helper text # Add an extra helper text to each checkbox
-                    element inside the dropdown menu list with this example.
-                    Helper text # Add an extra helper text to each checkbox
-                    element inside the dropdown menu list with this example.
-                  </div>
-                ))}
-              </div>
+        </div>
+      </div>
+      <div className="flex w-full">
+        <div
+          ref={leftRef}
+          className={` bg-gray-300 min-h-2  transition-all ${
+            scrollPhase === 2 ? "fixed bottom-0 w-1/2" : "relative w-full"
+          }`}
+        >
+          {[...Array(5)].map((_, index) => (
+            <div
+              key={index}
+              className=" bg-white border rounded-md w-full p-3 shadowContent"
+            >
+              Helper text # Add an extra helper text to each checkbox element
+              inside the dropdown menu list with this example. Helper text # Add
+              an extra helper text to each checkbox element inside the dropdown
+              menu list with this example.{index}
             </div>
+          ))}
+        </div>
+        <div className="flex w-full">
+          <div
+            ref={rightRef}
+            className={`w-full bg-blue-300 h-[1500px]  ${
+              scrollPhase === 2 ? "w-full" : ""
+            }`}
+          >
+            Right Section (Scrolls last)
+            {[...Array(13)].map((_, index) => (
+              <div
+                key={index}
+                className=" bg-white border rounded-md w-full p-3 shadowContent"
+              >
+                Helper text # Add an extra helper text to each checkbox element
+                inside the dropdown menu list with this example. Helper text #
+                Add an extra helper text to each checkbox element inside the
+                dropdown menu list with this example.
+              </div>
+            ))}
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
-};
-export default Profile;
+}

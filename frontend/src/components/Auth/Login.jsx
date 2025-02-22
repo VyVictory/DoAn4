@@ -9,7 +9,7 @@ import { login } from "../../service/auth";
 export default function Login({ chaneform }) {
   const { setShowLogin } = useAuth();
   const [formData, setFormData] = useState({
-    identifier: "lephuc0167283@gmail.com",
+    identifier: "1@a.com",
     password: "adad",
   });
   const [errors, setErrors] = useState({});
