@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 dotenv.config(); // Load biến môi trường từ .env
 
-const SECRET_KEY = process.env.JWT_SECRET || "emiton"; // Sử dụng biến môi trường
+const SECRET_KEY = process.env.JWT_SECRET ||"emiton"; // Sử dụng biến môi trường
 
 // 🟢 Đăng ký tài khoản
 export const register = async (req, res) => {
