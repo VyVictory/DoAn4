@@ -17,7 +17,7 @@ app.use(express.json());
 app.use('/auth', authRoutes);
 app.use('/user', routerUser);
 
-mongoose.connect('mongodb+srv://vyvictory:1234567899@cluster0.vahim.mongodb.net/', {
+mongoose.connect('', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }).then(() => {

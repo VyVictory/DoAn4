@@ -16,7 +16,7 @@ export const register = async (req, res) => {
     if (!name || !email || !password || !birthDate || !gender) {
       return res.status(400).json({ message: "All fields are required" });
     }
-
+    
     // email = email.trim().toLowerCase(); // Chuẩn hóa email
 
     // 🔍 Kiểm tra email đã tồn tại hay chưa

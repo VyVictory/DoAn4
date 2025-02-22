@@ -19,8 +19,8 @@ export const register = async (userData) => {
       birthDate: userData.birthDate,
       gender: userData.gender,
     });
-    // const { token } = response.data;
-    // authToken.setToken(token);
+    const { token } = response.data;
+    authToken.setToken(token);
     console.log(response)
     return response.data;
   } catch (error) {
