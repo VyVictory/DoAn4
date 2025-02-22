@@ -11,8 +11,12 @@ const authMiddleware = (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token.replace('Bearer ', ''), SECRET_KEY);
-        req.user = decoded; // Attach user info to request object
-        next();
+
+        // Nếu user chỉ cần xác thực mà không cần chuyển sang middleware khác, trả về luôn user
+        return res.status(200).json({ message: 'Authenticated', user: decoded });
+
+        // Nếu cần tiếp tục xử lý middleware khác, thay `return` bằng `next();`
+        // next();
     } catch (error) {
         res.status(401).json({ message: 'Invalid token' });
     }

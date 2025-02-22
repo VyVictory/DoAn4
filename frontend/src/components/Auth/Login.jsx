@@ -10,7 +10,7 @@ export default function Login({ chaneform }) {
   const { setShowLogin } = useAuth();
   const [formData, setFormData] = useState({
     identifier: "lephuc0167283@gmail.com",
-    password: "Emiton1234@#",
+    password: "adad",
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);

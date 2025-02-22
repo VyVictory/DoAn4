@@ -308,7 +308,7 @@ const Messages = () => {
             } border-l shadow-xl h-full`}
           >
             <div className="p-2 flex justify-between items-center">
-              <div className=" w-full flex z-10 h-8 absolute">
+              <div className="flex z-10 h-8 absolute">
                 <ArrowRightIcon
                   onClick={() => setRightbarOpen((prevState) => !prevState)}
                   className="h-8 lg:hidden hover:scale-125 text-blue-500 bg-violet-200 active:bg-violet-400 hover:bg-violet-300 rounded-3xl p-1 cursor-pointer"
