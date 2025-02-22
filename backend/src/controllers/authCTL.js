@@ -12,24 +12,28 @@ export const register = async (req, res) => {
   try {
     let { name, email, password, birthDate, gender } = req.body;
 
+    // Kiểm tra dữ liệu nhập vào
     if (!name || !email || !password || !birthDate || !gender) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    email = email.trim().toLowerCase();
-    const existingUser = await User.findOne({ email });
+    // email = email.trim().toLowerCase(); // Chuẩn hóa email
+
+    // 🔍 Kiểm tra email đã tồn tại hay chưa
+    const existingUser = await User.findOne({ email }); // Dùng lean() để tối ưu hiệu suất
     if (existingUser) {
+        console.log(existingUser)
       return res.status(400).json({ message: "Email already in use" });
     }
 
+    // Mã hóa mật khẩu
     const hashedPassword = await bcrypt.hash(password, 10);
-    const avatar = "";
 
     const newUser = new User({
       name: name.trim(),
       email,
-      avatar,
       password: hashedPassword,
+      avatar: "",
       birthDate,
       gender,
     });
@@ -37,23 +41,29 @@ export const register = async (req, res) => {
     await newUser.save();
 
     res.status(201).json({
-      name: newUser.name,
-      email: newUser.email,
-      birthDate: newUser.birthDate,
-      gender: newUser.gender,
+      message: "User registered successfully",
+      user: {
+        _id: newUser._id,
+        name: newUser.name,
+        email: newUser.email,
+        birthDate: newUser.birthDate,
+        gender: newUser.gender,
+      },
     });
   } catch (error) {
     console.error("❌ Registration error:", error);
+
+    // Xử lý lỗi duplicate key
     if (error.code === 11000) {
-      return res
-        .status(400)
-        .json({ message: "Duplicate key error, email already exists" });
+      return res.status(400).json({ message: "Email already in use" });
     }
+
     res
       .status(500)
       .json({ message: "Error registering user", error: error.message });
   }
 };
+
 // 🔵 Đăng nhập
 export const login = async (req, res) => {
   let { email, password } = req.body;
