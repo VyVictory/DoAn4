@@ -9,17 +9,27 @@ export const createPost = async (req, res) => {
     const { content } = req.body;
 
     try {
+        if (!req.user || !req.user._id) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+
+        if (!content || content.trim() === "") {
+            return res.status(400).json({ message: "Content cannot be empty" });
+        }
+
         const newPost = new Post({
-            author: req.user.id,
-            content
+            author: req.user._id,
+            content: content.trim(),
         });
 
         await newPost.save();
         res.status(201).json(newPost);
     } catch (error) {
-        res.status(500).json({ message: 'Error creating post', error });
+        console.error("Error creating post:", error);
+        res.status(500).json({ message: "Error creating post", error });
     }
 };
+
 // Like bài viết
 export const likePost = async (req, res) => {
     try {
