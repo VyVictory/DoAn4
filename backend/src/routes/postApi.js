@@ -12,4 +12,7 @@ routerPost.get('/all', authMiddleware, getPosts);
 routerPost.post('/:postId/like', authMiddleware, likePost);
 routerPost.delete('/:postId', authMiddleware, deletePost);
 
+
+
+
 export default routerPost;
