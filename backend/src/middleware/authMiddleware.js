@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-const SECRET_KEY = 'emiton'; // Use process.env.SECRET_KEY in production
+const SECRET_KEY = process.env.JWT_SECRET || 'emiton'; // Sử dụng biến môi trường
 
 const authMiddleware = (req, res, next) => {
     const token = req.header('Authorization');
