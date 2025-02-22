@@ -13,7 +13,8 @@ export const AuthProvider = ({ children }) => {
     setIsLoadingProfile(true); // 🟢 Bắt đầu tải profile
     try {
       const userData = await getProfile();
-      setProfile(userData);
+      console.log(userData.user.user);
+      setProfile(userData.user);
     } catch (error) {
       console.error("Error fetching profile:", error);
       setProfile(null);
@@ -29,7 +30,14 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ showLogin, setShowLogin, profile, setProfile, isLoadingProfile, fetchProfile }}
+      value={{
+        showLogin,
+        setShowLogin,
+        profile,
+        setProfile,
+        isLoadingProfile,
+        fetchProfile,
+      }}
     >
       {children}
     </AuthContext.Provider>

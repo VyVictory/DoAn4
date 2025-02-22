@@ -16,6 +16,7 @@ import {
 import logo from "../logo.webp";
 import avt from "../img/DefaultAvatar.jpg";
 import LinkTo from "./LinkTo";
+import AvatarDropdown from "./avatarDropdow";
 import { useAuth } from "./AuthProvider";
 
 const NavBar = () => {
@@ -113,8 +114,8 @@ const NavBar = () => {
               </button>
             ) : (
               <button className="w-10 h-10 ">
-                <img className=" w-10 rounded-full" src={logo} alt="" />
-              </button>
+                  <img className=" w-10 rounded-full" src={logo} alt="" />
+                </button>
             )}
             {/* Ô tìm kiếm */}
             <div
@@ -185,16 +186,17 @@ const NavBar = () => {
           ) : profile === undefined ? (
             <div className="h-12 w-12 bg-gray-300 rounded-full animate-pulse"></div> // Skeleton UI khi chưa có profile
           ) : profile ? (
-            <button
-              onClick={() => setShowLogin(true)}
-              className="h-12 w-12 border-2 border-gray-300 rounded-full overflow-hidden hover:ring-2 hover:ring-blue-200 transition duration-300"
-            >
-              <img
-                src={avt}
-                alt="Profile"
-                className="w-full h-full object-cover"
-              />
-            </button>
+            // <button
+            //   onClick={() => setShowLogin(true)}
+            //   className="h-12 w-12 border-2 border-gray-300 rounded-full overflow-hidden hover:ring-2 hover:ring-blue-200 transition duration-300"
+            // >
+            //   <img
+            //     src={avt}
+            //     alt="Profile"
+            //     className="w-full h-full object-cover"
+            //   />
+            // </button>
+            <AvatarDropdown avt={avt} />
           ) : (
             <button
               onClick={() => setShowLogin(true)}
