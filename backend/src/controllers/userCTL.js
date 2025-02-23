@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 export const getProfile = async (req, res) => {
     try {
         // Tìm user theo ID và loại bỏ password
-        console.log(req.user._id)
+        // console.log(req.user._id)
         const user = await User.findById(req.user._id).select('-password');
         if (!user) {
             return res.status(404).json({ message: 'User not found' });

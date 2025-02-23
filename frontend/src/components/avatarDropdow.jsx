@@ -2,9 +2,15 @@ import { useState, useRef, useEffect } from "react";
 import { useAuth } from "./AuthProvider";
 import authToken from "../service/storage/authToken";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDownIcon } from "@heroicons/react/24/solid";
-
+import {
+  ChevronDownIcon,
+  SunIcon,
+  MoonIcon,
+  Cog6ToothIcon,
+} from "@heroicons/react/24/solid";
+import { useModule } from "./module";
 const AvatarDropdown = ({ avt }) => {
+  const { setUsecase} = useModule();
   const [isOpen, setIsOpen] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const containerRef = useRef(null);
@@ -73,20 +79,33 @@ const AvatarDropdown = ({ avt }) => {
                 <div className="truncate">{profile.email}</div>
               </div>
             </a>
-            <ul className="py-2 text-sm">
+            <ul className="py-2 text-base px-2 ">
               <li>
-                <a href="#" className="block px-4 py-2 hover:bg-gray-100">
+                <a
+                  href="#"
+                  className="block px-4 py-2 hover:bg-gray-100 rounded-md"
+                >
                   Dashboard
                 </a>
               </li>
               <li>
-                <a href="#" className="block px-4 py-2 hover:bg-gray-100">
-                  Settings
+                <a
+                  href="#"
+                  className="flex flex-row items-center px-4 py-2 h  rounded-md hover:scale-105 hover:bg-violet-100"
+                  onClick={()=>{setUsecase("Privacy")}}
+                >
+                  <Cog6ToothIcon className="h-8 w-8 p-1 bg-gray-50  rounded-full text-gray-800" />
+                  <span className="pl-4">Settings</span>
                 </a>
               </li>
               <li>
-                <a href="#" className="block px-4 py-2 hover:bg-gray-100">
-                  Earnings
+                <a
+                  href="#"
+                  className="flex px-4 py-2   rounded-md flex-row items-center hover:scale-105 hover:bg-violet-100"
+                >
+                  {/* <MoonIcon className="h-6 w-6 text-gray-800" /> */}
+                  <SunIcon className="h-8 w-8 p-1 bg-gray-50 rounded-full  text-yellow-500" />
+                  <span className="pl-4">Nền Sáng</span>
                 </a>
               </li>
             </ul>

@@ -93,15 +93,15 @@ export const login = async (req, res) => {
 
     const user = await User.findOne({ email });
     if (!user) {
-      console.log("❌ No user found");
+      console.log("❌ từ authCTL No user found");
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    console.log("✅ User found:", user);
+    console.log("✅ từ authCTL User found:", user);
 
     // Kiểm tra mật khẩu
     const isPasswordValid = await bcrypt.compare(password, user.password);
-    console.log("🔑 Password match:", isPasswordValid); // ✅ Debug
+    console.log("🔑 từ authCTL Password match:", isPasswordValid); // ✅ Debug
 
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Invalid credentials" });
