@@ -4,7 +4,7 @@ import Login from "../components/Auth/Login";
 const Layout = () => {
 
     return (
-        <div className="relative h-screen">
+        <div className="relative bg-gray-100">
             <NavBar />
             <Outlet />
         </div>

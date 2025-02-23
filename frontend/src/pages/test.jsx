@@ -1,42 +1,10 @@
 import { useEffect, useState, useRef } from "react";
 
 const Test = () => {
-  const [isPassed, setIsPassed] = useState(false);
-  const targetRef = useRef(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const rect = targetRef.current.getBoundingClientRect();
-      setIsPassed(rect.top < window.innerHeight && rect.bottom > 0);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Kiểm tra ban đầu
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-  useEffect(() => {
-    console.log(isPassed);
-  }, [isPassed]);
   return (
-    <div>
-      <div style={{ height: "100vh", background: "lightgray" }}>
-        Lăn xuống để kiểm tra
-      </div>
-      <div style={{ height: "100vh", background: "lightgray" }}>
-        Lăn xuống để kiểm tra
-      </div>
-      <div  className={`${isPassed ? "fixed bottom-0 w-full left-0" : ""}`} style={{ height: "100px", background: "yellow" }}>
-        Vị trí cần theo dõi
-      </div>
-      <div ref={targetRef}>
-      </div>
-      <div style={{ height: "100vh", background: "lightblue" }}>
-        Lăn tiếp để kiểm tra
-      </div>
-      <p className="fixed top-0">Trạng thái: {isPassed ? "True" : "False"}</p>
+    <div className="bg-black min-h-screen relative flex flex-row">
+      <div className="bg-blue-300 h-[100px]  w-1/2"></div>
+      <div className="bg-violet-400 h-[3000px] right-0 w-1/2 absolute">awd</div>
     </div>
   );
 };
