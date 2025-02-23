@@ -157,7 +157,7 @@ const Profile = () => {
         </div>
         <div className="w-full shadow-lg h-1"></div>
 
-        <div className="flex w-full">
+        <div className="flex w-full ">
           <div className={`md:flex flex-col hidden md:w-1/2 items-end `}>
             <div
               ref={targetRefH}
@@ -185,7 +185,7 @@ const Profile = () => {
             <div className="w-full" ref={targetRef}></div>
           </div>
           <div className="md:w-1/2 w-full items-start">
-            <div className="profileContentW bg-gray-500">
+            <div className="profileContentW bg-gray-500 pr-2">
               {[...Array(200)].map((_, index) => (
                 <div key={index}>
                   HÌNH ẢNH VÀ VIDEO BẠN ĐANG XEM LÀ 100% TỪ GAME Tặng VIPcode:
