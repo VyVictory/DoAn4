@@ -104,7 +104,7 @@ const Profile = () => {
               <button className="bg-gray-50 hover:bg-violet-50 px-2 py-2 rounded-md flex items-center transition-transform duration-200 hover:scale-110">
                 Edit
               </button>
-              <button className="hover:bg-violet-50 min-w-16 justify-center px-2 py-1 rounded-md flex items-center">
+              <button className="hover:bg-violet-50 min-w-16 justify-center px-2 py-1 rounded-md flex items-center ">
                 <ChevronDownIcon className="w-8 h-8 text-gray-500 transition-transform duration-200 hover:scale-125 hover:text-violet-400" />
               </button>
             </div>
@@ -120,7 +120,7 @@ const Profile = () => {
                 (item, index) => (
                   <button
                     key={index}
-                    className="hover:bg-gray-100 p-3 rounded-xl hidden md:block"
+                    className="hover:bg-gray-100 p-3 rounded-xl hidden md:block "
                   >
                     {item}
                   </button>
@@ -150,7 +150,7 @@ const Profile = () => {
                 </Menu.Items>
               </Menu>
             </div>
-            <button className="md:mr-6">
+            <button className="md:mr-6 " >
               <Bars3Icon className="h-6 w-6 hover:text-blue-400 hover:scale-125" />
             </button>
           </div>

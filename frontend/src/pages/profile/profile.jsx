@@ -117,8 +117,8 @@ const Profile = () => {
                     </Menu.Items>
                   </Menu>
                 </div>
-                <button className="md:mr-6">
-                  <Bars3Icon className="h-6 w-6 hover:text-blue-400 hover:scale-125" />
+                <button className="md:mr-6 ">
+                  <Bars3Icon className="h-8 w-8 hover:text-blue-400 hover:scale-125 bg-gray-50 hover:bg-gray-100 hover:rounded-md rounded-md p-1" />
                 </button>
               </div>
             </div>

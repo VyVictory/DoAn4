@@ -149,7 +149,7 @@ const Messages = () => {
             className="lg:hidden"
             onClick={() => setSidebarOpen((prevState) => !prevState)}
           >
-            <Bars3Icon className="h-6 w-6" />
+            <Bars3Icon className="h-6 w-6 " />
           </button>
           <div className="flex flex-row justify-center items-center p-4 w-full">
             <h2 className="text-lg font-semibold">Tên người dùng</h2>

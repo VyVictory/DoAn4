@@ -51,11 +51,12 @@ const AvatarDropdown = ({ avt }) => {
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute right-0 mt-14 z-10 divide-y bg-white rounded-lg shadow-lg shadow-gray-500">
+        <div className="absolute min-w-60 right-0 mt-14 z-10 divide-y bg-white rounded-lg shadow-lg shadow-zinc-500">
           <a
-          href="/profile"
-          className="px-4 py-3 flex flex-row justify-center items-center space-x-2">
-            <button className="w-10 h-10 flex justify-center items-center">
+            href="/profile"
+            className="px-4  py-3 flex flex-row justify-center items-center space-x-2 hover:scale-110 duration-700"
+          >
+            <button className="w-10 h-10 border-2 border-blue-100 rounded-full flex justify-center items-center ">
               <img className="rounded-full" src={avt} alt="user photo" />
             </button>
             <div className="text-sm max-w-64 ">
