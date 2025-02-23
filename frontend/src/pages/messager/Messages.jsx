@@ -8,6 +8,7 @@ import UseClickOutside from "../../components/UseClickOutside";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline"; // Import icon
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline"; // Import icon
 import { FriendIcon, GroupIcon, NewsIcon } from "../../css/icon";
+import { motion, AnimatePresence } from "framer-motion";
 import ChatMessages from "./ChatMessages";
 const Messages = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -89,21 +90,30 @@ const Messages = () => {
           </div>
 
           {/* Phần trên: Logo và ô tìm kiếm */}
-          <div className="flex items-center max-h-12 justify-center px-4 space-x-2 w-full rounded-lg  pb-1">
-            {/* Chỉ hiển thị nếu có nội dung nhập vào */}
-            {searchText && (
-              <button
-                onClick={() => {
-                  setSearchText(false);
-                }}
-                className="h-10 w-10 px-2 flex items-center justify-center hover:bg-violet-100 rounded-full transition duration-200 ease-in-out"
-              >
-                <ArrowLeftIcon className="h-6 w-6 hover:scale-125 text-blue-500" />
-              </button>
-            )}
+          <div className="flex items-center max-h-12 justify-center px-4 space-x-2 w-full rounded-lg pb-1">
+            {/* Hiệu ứng nút mũi tên */}
+            <AnimatePresence>
+              {searchText && (
+                <motion.button
+                  onClick={() => setSearchText("")}
+                  initial={{ opacity: 0, x: -20 }} // Bắt đầu mờ và lệch trái
+                  animate={{ opacity: 1, x: 0 }} // Trượt vào
+                  exit={{ opacity: 0, x: -20 }} // Trượt ra khi ẩn
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className="h-10 w-10 px-2 flex items-center justify-center hover:bg-violet-100 rounded-full transition duration-200 ease-in-out"
+                >
+                  <ArrowLeftIcon className="h-6 w-6 hover:scale-125 text-blue-500" />
+                </motion.button>
+              )}
+            </AnimatePresence>
 
             {/* Ô tìm kiếm */}
-            <div className="flex items-center w-full max-w-lg bg-violet-100 rounded-3xl shadow-sm pl-2 transition duration-300 ease-in-out">
+            <motion.div
+              initial={{ width: "100%" }} // Bắt đầu với full width
+              animate={{ width: searchText ? "90%" : "100%" }} // Khi có searchText thì thu nhỏ
+              transition={{ duration: 0.3, ease: "easeInOut" }} // 🟢 Fix hiệu ứng thụt từ từ
+              className="flex items-center w-full max-w-lg bg-violet-100 rounded-3xl shadow-sm pl-2 transition duration-300 ease-in-out"
+            >
               <button className="h-10 w-10 hover:scale-125 justify-center text-violet-300 hover:text-violet-700 rounded-full transition duration-300 ease-in-out">
                 <MagnifyingGlassIcon className="max-h-6" />
               </button>
@@ -111,14 +121,14 @@ const Messages = () => {
                 type="text"
                 placeholder="Tìm kiếm trên ZaFaCook"
                 onClick={() => {
-                  if (searchText == "") {
+                  if (searchText === "") {
                     setSearchText(" ");
                   }
                 }}
-                className="w-full h-10 pr-2 pl-1 text-gray-700 bg-transparent outline-none rounded-full focus:ring-0 transition duration-300 ease-in-out"
+                className="w-full h-10 pr-2 pl-1 text-gray-700 bg-transparent outline-none rounded-full focus:ring-0"
                 onChange={(e) => setSearchText(e.target.value)}
               />
-            </div>
+            </motion.div>
           </div>
           <div className="p-2 flex space-x-2 bg-white shadow-sm rounded-lg overflow-x-auto  pb-3 mx-2">
             {/* Nút menu */}
@@ -144,7 +154,7 @@ const Messages = () => {
       </div>
       {/* Z-INDEX Chat Section */}
       <div className="NavbarUser flex flex-1 flex-col">
-        <div className="shadow-sm border-b px-3 z-10 flex">
+        <div className="shadow-sm border-b px-3 z-10 flex bg-white  ">
           <button
             className="lg:hidden"
             onClick={() => setSidebarOpen((prevState) => !prevState)}

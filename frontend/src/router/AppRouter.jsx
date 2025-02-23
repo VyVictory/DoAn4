@@ -1,4 +1,4 @@
-import React from "react";
+import React  from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -18,6 +18,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Profile from "../pages/profile/profile.jsx";
 import Profile1 from "../components/profile/profile.jsx";
 import Test from "../pages/test.jsx";
+import { useEffect } from "react";
 const AppRouter = () => (
   <Routes>
     <Route element={<Layout />}>
@@ -34,6 +35,7 @@ const AppRouter = () => (
 
 const App = () => {
   const { showLogin, setShowLogin } = useAuth();
+  
   return (
     <Router>
       {showLogin && <Auth />}

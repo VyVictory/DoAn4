@@ -5,15 +5,22 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 dotenv.config(); // Load biến môi trường từ .env
 
-const SECRET_KEY = process.env.JWT_SECRET ||"emiton"; // Sử dụng biến môi trường
+const SECRET_KEY = process.env.JWT_SECRET || "emiton"; // Sử dụng biến môi trường
 
 // 🟢 Đăng ký tài khoản
 export const register = async (req, res) => {
   try {
-    let { firstName,lastName, email, password, birthDate, gender } = req.body;
+    let { firstName, lastName, email, password, birthDate, gender } = req.body;
 
     // Kiểm tra dữ liệu nhập vào
-    if (!firstName || !lastName || !email || !password || !birthDate || !gender) {
+    if (
+      !firstName ||
+      !lastName ||
+      !email ||
+      !password ||
+      !birthDate ||
+      !gender
+    ) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
@@ -31,7 +38,7 @@ export const register = async (req, res) => {
 
     const newUser = new User({
       firstName: firstName.trim(),
-      lastName:  lastName.trim(),
+      lastName: lastName.trim(),
       email,
       password: hashedPassword,
       birthDate,
@@ -43,7 +50,8 @@ export const register = async (req, res) => {
       {
         user: {
           _id: newUser._id,
-          name: newUser.name,
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
           email: newUser.email,
           birthDate: newUser.birthDate,
           gender: newUser.gender,
@@ -72,63 +80,65 @@ export const register = async (req, res) => {
 
 // 🔵 Đăng nhập
 export const login = async (req, res) => {
-    let { email, password } = req.body;
-  
-    if (!email || !password) {
-      return res.status(400).json({ message: "Email and password are required" });
+  let { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ message: "Email and password are required" });
+  }
+
+  email = email.trim().toLowerCase(); // Chuẩn hóa email
+
+  try {
+    console.log("🔍 Searching user with email:", email); // ✅ Debug
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      console.log("❌ No user found");
+      return res.status(401).json({ message: "Invalid credentials" });
     }
-  
-    email = email.trim().toLowerCase(); // Chuẩn hóa email
-  
-    try {
-      console.log("🔍 Searching user with email:", email); // ✅ Debug
-  
-      const user = await User.findOne({ email });
-      if (!user) {
-        console.log("❌ No user found");
-        return res.status(401).json({ message: "Invalid credentials" });
-      }
-  
-      console.log("✅ User found:", user);
-  
-      // Kiểm tra mật khẩu
-      const isPasswordValid = await bcrypt.compare(password, user.password);
-      console.log("🔑 Password match:", isPasswordValid); // ✅ Debug
-  
-      if (!isPasswordValid) {
-        return res.status(401).json({ message: "Invalid credentials" });
-      }
-  
-      // 🔑 Tạo token
-      const token = jwt.sign(
-        {
-          _id: user._id,
-          email: user.email,
-          name: user.name,
-          birthDate: user.birthDate,
-          createdAt: user.createdAt,
-          avatar: user.avatar,
-          updatedAt: user.updatedAt,
-        },
-        SECRET_KEY,
-        { expiresIn: "1h" }
-      );
-  
-      // ✅ Trả về dữ liệu hợp lệ
-      res.status(200).json({
-        user: {
-          _id: user._id,
-          email: user.email,
-          name: user.name,
-          birthDate: user.birthDate,
-          createdAt: user.createdAt,
-          avatar: user.avatar,
-          updatedAt: user.updatedAt,
-        },
-        token, // 🔹 Gửi token hợp lệ
-      });
-    } catch (error) {
-      console.error("❌ Error during login:", error);
-      res.status(500).json({ message: "Error logging in", error: error.message });
+
+    console.log("✅ User found:", user);
+
+    // Kiểm tra mật khẩu
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    console.log("🔑 Password match:", isPasswordValid); // ✅ Debug
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: "Invalid credentials" });
     }
-  };
+
+    // 🔑 Tạo token
+    const token = jwt.sign(
+      {
+        _id: user._id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        birthDate: user.birthDate,
+        createdAt: user.createdAt,
+        avatar: user.avatar,
+        updatedAt: user.updatedAt,
+      },
+      SECRET_KEY,
+      { expiresIn: "1h" }
+    );
+
+    // ✅ Trả về dữ liệu hợp lệ
+    res.status(200).json({
+      user: {
+        _id: user._id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        birthDate: user.birthDate,
+        createdAt: user.createdAt,
+        avatar: user.avatar,
+        updatedAt: user.updatedAt,
+      },
+      token, // 🔹 Gửi token hợp lệ
+    });
+  } catch (error) {
+    console.error("❌ Error during login:", error);
+    res.status(500).json({ message: "Error logging in", error: error.message });
+  }
+};

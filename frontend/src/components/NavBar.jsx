@@ -13,7 +13,7 @@ import {
   BellIcon,
   ArrowPathIcon,
 } from "@heroicons/react/24/outline"; // Import icon
-import logo from "../logo.webp";
+import logo from "../img/logo.gif";
 import avt from "../img/DefaultAvatar.jpg";
 import LinkTo from "./LinkTo";
 import AvatarDropdown from "./avatarDropdow";

@@ -7,7 +7,7 @@ import { useAuth } from "../AuthProvider";
 import { login } from "../../service/auth";
 
 export default function Login({ chaneform }) {
-  const { setShowLogin } = useAuth();
+  const { setShowLogin ,} = useAuth();
   const [formData, setFormData] = useState({
     identifier: "1@a.com",
     password: "adad",
@@ -45,13 +45,13 @@ export default function Login({ chaneform }) {
 
         // Call the login function from service.js
         const { token, user } = await login(requestData);
-
-        toast.success(`Đăng nhập thành công! Chào mừng bạn, ${user.name}.`, {
+        console.log(user)
+        toast.success(`Chào mừng bạn, ${user?.firstName+ user?.lastName}.`, {
           autoClose: 500,
         });
         setTimeout(() => {
           window.location.reload(); // 🟢 Reload lại trang sau 500ms để đảm bảo UI cập nhật
-        }, 500);
+        }, 1000);
         setShowLogin(false);
       } catch (error) {
         toast.error(error.message || "Đăng nhập thất bại, vui lòng thử lại.", {
