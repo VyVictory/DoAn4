@@ -1,13 +1,17 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useAuth } from "../context/AuthProvider";
 import { login } from "../../service/auth";
+import { useGoogleLogin } from "@react-oauth/google";
+import { GoogleLogin } from "@react-oauth/google";
+import axios from "axios";
 
 export default function Login({ chaneform }) {
-  const { setShowLogin ,} = useAuth();
+  const { setShowLogin } = useAuth();
   const [formData, setFormData] = useState({
     identifier: "1@a.com",
     password: "adad",
@@ -43,15 +47,18 @@ export default function Login({ chaneform }) {
           ? { email: formData.identifier, password: formData.password }
           : { numberPhone: formData.identifier, password: formData.password };
 
-        // Call the login function from service.js
+        // Gửi yêu cầu đăng nhập
         const { token, user } = await login(requestData);
-        console.log(user)
-        toast.success(`Chào mừng bạn, ${user?.firstName+ user?.lastName}.`, {
+        console.log(user);
+
+        toast.success(`Chào mừng bạn, ${user?.firstName + user?.lastName}.`, {
           autoClose: 500,
         });
+
         setTimeout(() => {
-          window.location.reload(); // 🟢 Reload lại trang sau 500ms để đảm bảo UI cập nhật
+          window.location.reload(); // Reload lại trang để cập nhật UI
         }, 1000);
+
         setShowLogin(false);
       } catch (error) {
         toast.error(error.message || "Đăng nhập thất bại, vui lòng thử lại.", {
@@ -64,6 +71,44 @@ export default function Login({ chaneform }) {
       setErrors(validationErrors);
     }
   };
+
+  // Đăng nhập với Google
+  const googleLogin = useGoogleLogin({
+    onSuccess: async (response) => {
+      try {
+        const { access_token } = response;
+        // Lấy thông tin người dùng từ Google API
+        const { data } = await axios.get(
+          "https://www.googleapis.com/oauth2/v1/userinfo",
+          {
+            headers: { Authorization: `Bearer ${access_token}` },
+          }
+        );
+
+        // Gửi token Google đến backend để xác thực
+        const backendResponse = await login({ googleToken: access_token });
+
+        toast.success(`Chào mừng bạn, ${data.name}!`, {
+          autoClose: 500,
+        });
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+
+        setShowLogin(false);
+      } catch (error) {
+        toast.error("Đăng nhập Google thất bại, vui lòng thử lại.", {
+          autoClose: 500,
+        });
+      }
+    },
+    onError: () => {
+      toast.error("Đăng nhập Google thất bại, vui lòng thử lại.", {
+        autoClose: 500,
+      });
+    },
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -78,19 +123,20 @@ export default function Login({ chaneform }) {
   };
 
   return (
-    <div className="w-full h-full flex justify-center items-center">
-      <div className="bg-white shadow-lg shadow-gray-500 rounded-2xl w-full my-4 max-w-sm">
-        <button
-          onClick={() => setShowLogin(false)}
-          className="w-full flex justify-end top-2 right-6 text-gray-500 hover:text-gray-700 p-2"
-        >
-          <XMarkIcon className="h-8 w-8 hover:bg-red-200 rounded-lg" />
-        </button>
-        <div className="p-10">
-          <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
-            Đăng nhập
-          </h1>
-
+    <div className="flex justify-center items-center h-screen w-full">
+      <div className="bg-white backdrop-blur-md shadow-lg shadow-gray-500 rounded-2xl w-full my-4 max-w-sm">
+        <div className="p-10 px-8">
+          <div className="flex justify-between items-center">
+            <button
+              onClick={() => setShowLogin(false)}
+              className="absolute top-0 right-0 p-2 rounded-full"
+            >
+              <XMarkIcon className="h-8 w-8 hover:bg-red-200 rounded-lg" />
+            </button>
+            <h1 className="text-2xl w-full text-center font-bold text-gray-800 mb-12">
+              Đăng nhập
+            </h1>
+          </div>
           <div className="mb-5">
             <label
               htmlFor="identifier"
@@ -103,7 +149,7 @@ export default function Login({ chaneform }) {
               name="identifier"
               value={formData.identifier}
               onChange={handleChange}
-              className="mt-2 block w-full px-4 py-3 text-gray-700 bg-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="mt-2 block w-full px-4 py-3 text-gray-700 bg-gray-50 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none  shadow-inner shadow-gray-300"
               placeholder="Nhập email hoặc số điện thoại"
             />
             {errors.identifier && (
@@ -123,7 +169,7 @@ export default function Login({ chaneform }) {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className="mt-2 block w-full px-4 py-3 text-gray-700 bg-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="mt-2 block w-full px-4 py-3 text-gray-700 bg-gray-50 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none  shadow-inner shadow-gray-300"
               placeholder="Nhập mật khẩu"
             />
             {errors.password && (
@@ -139,13 +185,15 @@ export default function Login({ chaneform }) {
           </Link>
 
           <button
-            onClick={() => handleSubmit()}
+            onClick={handleSubmit}
             type="submit"
             className="w-full py-3 text-white font-semibold bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg shadow-lg hover:from-blue-600 hover:to-purple-600 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300"
             disabled={loading}
           >
             {loading ? "Đang xử lý..." : "Đăng nhập"}
           </button>
+
+          {/* Nút đăng nhập với Google */}
 
           <div className="flex items-center justify-between mt-3 mb-4 text-nowrap">
             <div className="text-sm text-gray-400 hover:underline">
@@ -157,6 +205,17 @@ export default function Login({ chaneform }) {
             >
               Đăng ký ngay
             </button>
+          </div>
+          <div className="w-full p-2 flex flex-row space-x-2">
+            <div className="w-full h-3 border-b "></div>
+            <div>hoặc</div>
+            <div className=" w-full h-3 border-b"></div>
+          </div>
+          <div className="w-full px-10 mt-3">
+            <GoogleLogin
+              onSuccess={(response) => console.log(response)}
+              onError={() => console.log("Đăng nhập Google thất bại")}
+            />
           </div>
         </div>
       </div>

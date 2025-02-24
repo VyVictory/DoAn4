@@ -13,7 +13,8 @@ import authToken from "./storage/authToken";
 export const register = async (userData) => {
   try {
     const response = await api.post("auth/register", {
-      name: userData.name,
+      firstName: userData.firstName,
+      lastName: userData.lastName,
       email: userData.email,
       password: userData.password,
       birthDate: userData.birthDate,

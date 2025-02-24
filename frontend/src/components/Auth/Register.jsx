@@ -1,41 +1,37 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import NotificationCss from "../NotificationCss";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../context/AuthProvider";
-import { register } from "../../service/auth"; // Ensure you're importing the register function
+import { register } from "../../service/auth";
+
 export default function Register({ chaneform }) {
-  const { showLogin, setShowLogin } = useAuth();
+  const { setShowLogin } = useAuth();
   const [formData, setFormData] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
     confirmPassword: "",
     birthDate: "",
     gender: "",
   });
-
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
 
   const validateForm = () => {
     const validationErrors = {};
-
-    if (!formData.name) validationErrors.name = "Vui lòng nhập tên của bạn.";
+    if (!formData.firstName) validationErrors.firstName = "Vui lòng nhập họ.";
+    if (!formData.lastName) validationErrors.lastName = "Vui lòng nhập tên.";
     if (!formData.email) {
       validationErrors.email = "Vui lòng nhập email.";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       validationErrors.email = "Email không hợp lệ.";
     }
-
     if (!formData.password)
       validationErrors.password = "Vui lòng nhập mật khẩu.";
     if (formData.password !== formData.confirmPassword) {
       validationErrors.confirmPassword = "Mật khẩu không khớp.";
     }
-
     if (!formData.birthDate)
       validationErrors.birthDate = "Vui lòng nhập ngày sinh.";
     if (!formData.gender) validationErrors.gender = "Vui lòng chọn giới tính.";
@@ -47,208 +43,132 @@ export default function Register({ chaneform }) {
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length === 0) {
       try {
-        const response = await register(formData); // Use the register function from auth.js
-
+        const response = await register(formData);
         if (response) {
-          toast.success(
-            "Đăng ký thành công!",
-            NotificationCss.Success
-          );
-          setTimeout(() => {
-            window.location.reload(); // 🟢 Reload lại trang sau 500ms để đảm bảo UI cập nhật
-          }, 500);
+          toast.success("Đăng ký thành công!");
+          setTimeout(() => setShowLogin(false), 1000);
         }
       } catch (error) {
-        console.error("Lỗi:", error);
-        toast.error(
-          "Đăng ký thất bại, vui lòng thử lại.",
-          NotificationCss.Fail
-        );
+        toast.error("Đăng ký thất bại, vui lòng thử lại.");
       }
     } else {
       setErrors(validationErrors);
     }
   };
-
+  const primaryStar = () => {
+    return <div className="text-red-500 mr-1">*</div>;
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-    setErrors({
-      ...errors,
-      [name]: "",
-    });
-  };
-  const primaryTitle = () => {
-    return <p className="text-red-500 pr-1">*</p>;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
   return (
-    <div className="flex justify-center items-center h-screen w-full bg-transparent">
-      <div className="bg-white shadow-lg shadow-gray-500 rounded-2xl w-full max-w-lg my-4 flex flex-col justify-between overflow-y-auto max-h-[90vh]">
-        <button
-          onClick={() => setShowLogin(false)}
-          className="w-full flex justify-end  top-2 right-6 text-gray-500 hover:text-gray-700 p-2"
-        >
-          <XMarkIcon className="h-8 w-8 hover:bg-red-200 rounded-lg" />
-        </button>
-        <div className="pb-4 px-5 md:px-8">
-          <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
+    <div className="flex justify-center items-center h-screen w-full  ">
+      <div className="bg-white backdrop-blur-md shadow-2xl  rounded-2xl w-full max-w-lg p-6 md:py-8">
+        <div className="flex justify-between items-center">
+          <h1 className="text-2xl w-full text-center font-bold text-gray-800">
             Đăng ký
           </h1>
+          <button
+            onClick={() => setShowLogin(false)}
+            className="absolute top-0 right-0 p-2 rounded-full"
+          >
+            <XMarkIcon className="h-8 w-8 hover:bg-red-200 rounded-lg" />
+          </button>
+        </div>
 
-          <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4 mb-5">
-            <div className="col-span-1">
-              <label
-                htmlFor="name"
-                className="text-gray-600 text-sm font-medium flex"
-              >
-                {primaryTitle()} Tên
-              </label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className="mt-2 block w-full px-4 py-3 text-gray-700 bg-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                placeholder="Nhập tên của bạn"
-              />
-              {errors.name && (
-                <p className="text-red-500 text-xs mt-2">{errors.name}</p>
-              )}
-            </div>
-
-            <div className="col-span-1">
-              <label
-                htmlFor="email"
-                className="flex text-gray-600 text-sm font-medium"
-              >
-                {primaryTitle()} Email
-              </label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="mt-2 block w-full px-4 py-3 text-gray-700 bg-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                placeholder="Nhập email"
-              />
-              {errors.email && (
-                <p className="text-red-500 text-xs mt-2">{errors.email}</p>
-              )}
-            </div>
+        <div className="mt-6 space-y-4">
+          <InputField
+            label="Email"
+            name="email"
+            onHoder="Nhập email"
+            type="email"
+            value={formData.email}
+            onChange={handleChange}
+            error={errors.email}
+          />
+          <div className="grid grid-cols-2 gap-4">
+            <InputField
+              label="Họ"
+              name="firstName"
+              onHoder="Nhập họ"
+              value={formData.firstName}
+              onChange={handleChange}
+              error={errors.firstName}
+            />
+            <InputField
+              label="Tên"
+              name="lastName"
+              onHoder="Nhập tên"
+              value={formData.lastName}
+              onChange={handleChange}
+              error={errors.lastName}
+            />
           </div>
-
-          <div className="grid grid-cols-2 gap-4 mb-5">
-            <div className="col-span-1">
-              <label
-                htmlFor="password"
-                className="flex text-gray-600 text-sm font-medium"
-              >
-                {primaryTitle()} Mật khẩu
-              </label>
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                className="mt-2 block w-full px-4 py-3 text-gray-700 bg-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                placeholder="Nhập mật khẩu"
-              />
-              {errors.password && (
-                <p className="text-red-500 text-xs mt-2">{errors.password}</p>
-              )}
-            </div>
-
-            <div className="col-span-1">
-              <label
-                htmlFor="confirmPassword"
-                className="flex text-gray-600 text-sm font-medium"
-              >
-                {primaryTitle()} Nhập lại mật khẩu
-              </label>
-              <input
-                type="password"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                className={`mt-2 block w-full px-4 py-3 text-gray-700 bg-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none `}
-                placeholder="Nhập mật khẩu"
-              />
-              {errors.confirmPassword && (
-                <p className="text-red-500 text-xs mt-2">
-                  {errors.confirmPassword}
-                </p>
-              )}
-            </div>
+          <div className="grid grid-cols-2 gap-4">
+            <InputField
+              label="Mật khẩu"
+              name="password"
+              type="password"
+              onHoder="Nhập mật khẩu"
+              value={formData.password}
+              onChange={handleChange}
+              error={errors.password}
+            />
+            <InputField
+              label="Nhập lại mật khẩu"
+              name="confirmPassword"
+              type="password"
+              onHoder="Nhập mật khẩu"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              error={errors.confirmPassword}
+            />
           </div>
-
-          <div className="grid grid-cols-2 gap-4 mb-5">
-            {/* Ngày sinh */}
+          <div className="grid grid-cols-2 gap-4">
+            <InputField
+              label="Ngày sinh"
+              name="birthDate"
+              type="date"
+              value={formData.birthDate}
+              onChange={handleChange}
+              error={errors.birthDate}
+            />
             <div>
-              <label
-                htmlFor="birthDate"
-                className="flex text-gray-600 text-sm font-medium"
-              >
-                {primaryTitle()} Ngày sinh
-              </label>
-              <input
-                type="date"
-                name="birthDate"
-                value={formData.birthDate}
-                onChange={handleChange}
-                className="mt-2 block w-full px-3 md:px-4 py-3 text-gray-700 bg-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              />
-              {errors.birthDate && (
-                <p className="text-red-500 text-xs mt-2">{errors.birthDate}</p>
-              )}
-            </div>
-
-            {/* Giới tính */}
-            <div>
-              <label
-                htmlFor="gender"
-                className="flex text-gray-600 text-sm font-medium"
-              >
-                {primaryTitle()} Giới tính
+              <label className="flex flex-row text-black text-sm font-medium ">
+                {primaryStar()}Giới tính
               </label>
               <select
                 name="gender"
                 value={formData.gender}
                 onChange={handleChange}
-                required
-                className="mt-2 block w-full px-4 py-3 text-gray-700 bg-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                className="mt-2 block w-full px-4 py-3 min-h-[46.3px] rounded-lg focus:ring-2 focus:ring-blue-300 focus:outline-none bg-gray-50 shadow-inner shadow-gray-300"
               >
-                <option value="" style={{ color: "gray" }}>
-                  Chọn
-                </option>
+                <option value="">Chọn</option>
                 <option value="Male">Nam</option>
                 <option value="Female">Nữ</option>
                 <option value="Other">Khác</option>
               </select>
-
               {errors.gender && (
-                <p className="text-red-500 text-xs mt-2">{errors.gender}</p>
+                <p className="text-red-500 text-xs mt-1">{errors.gender}</p>
               )}
             </div>
           </div>
 
           <button
-            onClick={() => handleSubmit()}
-            type="submit"
-            className="w-full py-3 text-white font-semibold bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg shadow-lg hover:from-blue-600 hover:to-purple-600 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300"
+            onClick={handleSubmit}
+            className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition"
           >
             Đăng ký
           </button>
 
-          <div className="flex items-center justify-between mt-3 mb-4 text-nowrap">
-            <span className="text-sm text-gray-400">Đã có tài khoản?</span>{" "}
-            {/* Change Link to span */}
+          <div className="text-center text-sm mt-4 text-gray-600">
+            <span>Đã có tài khoản?</span>{" "}
             <button
               onClick={() => chaneform("login")}
-              className="text-sm text-blue-500 hover:underline"
+              className="text-blue-600 hover:underline font-semibold"
             >
               Đăng nhập ngay
             </button>
@@ -258,3 +178,35 @@ export default function Register({ chaneform }) {
     </div>
   );
 }
+
+const InputField = ({
+  label,
+  name,
+  type = "text",
+  value,
+  onChange,
+  error,
+  onHoder,
+}) => (
+  <div>
+    <label className="flex flex-row text-black text-sm font-medium">
+      <div className="text-red-500 mr-1">*</div>
+      {label}
+    </label>
+    <input
+      type={type}
+      name={name}
+      value={value}
+      onChange={onChange}
+      placeholder={onHoder}
+      className={`mt-2 block w-full px-4 py-3  rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-300 focus:outline-none shadow-inner shadow-gray-300 ${
+        error ? "border-red-500" : "border-gray-300"
+      }`}
+    />
+    {error && (
+      <p className="text-red-500 text-xs" style={{ marginBottom: "-10px" }}>
+        {error}
+      </p>
+    )}
+  </div>
+);

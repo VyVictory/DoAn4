@@ -89,7 +89,7 @@ const Profile = () => {
             <div className="w-full shadow-gray-400 z-10 flex justify-between items-center">
               <div className="w-full py-1 flex justify-between">
                 <div className="flex flex-row space-x-2">
-                  {["Posts", "About", "Friends", "Videos", "Groups"].map(
+                  {["Bài viết", "About", "Bạn bè", "Videos", "Nhóm"].map(
                     (item, index) => (
                       <button
                         key={index}
@@ -109,7 +109,7 @@ const Profile = () => {
                       More <ChevronDownIcon className="w-5 h-5 ml-1" />
                     </Menu.Button>
                     <Menu.Items className="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-md border z-[100]  transition-opacity ">
-                      {["Videos", "Groups"].map((item, index) => (
+                      {["Videos", "Nhóm"].map((item, index) => (
                         <Menu.Item key={index}>
                           {({ active }) => (
                             <button

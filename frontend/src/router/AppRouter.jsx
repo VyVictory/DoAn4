@@ -30,6 +30,7 @@ const AppRouter = () => (
     </Route>
     <Route path="/admin" element={<AdminPage />} />
     <Route path="/test" element={<Test />} />
+    <Route path="/login" element={<Auth />} />
   </Routes>
 );
 
@@ -40,7 +41,7 @@ const App = () => {
     <Router>
       {showLogin && <Auth />}
       <AppRouter />
-      <ToastContainer position="top-right" autoClose={3000} limit={3} />
+      <ToastContainer position="top-right" className='NavbarUser' autoClose={3000} limit={3} />
     </Router>
   );
 };
