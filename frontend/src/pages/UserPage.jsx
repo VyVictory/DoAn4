@@ -6,7 +6,7 @@ const UserPage = () => {
     <div className="flex NavbarUser flex-col items-center  h-screen overflow-auto">
       <div className="max-w-[800px]">
         <h1 className="text-4xl font-bold text-gray-800 text-center mt-2">
-          Welcome to Home Page
+          Welcome to Home Pages
         </h1>
         <p className="text-lg text-gray-600 mt-2 text-center mb-2">
           This is your home page content.
