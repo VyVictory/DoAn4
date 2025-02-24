@@ -1,22 +1,19 @@
-import React from 'react';
+import React from "react";
+import PostRight from "../components/profile/post/PostRigh";
 
 const UserPage = () => {
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Welcome to the User Page</h1>
-      <div className="bg-white p-4 rounded-md shadow-md">
-        <h2 className="text-xl font-semibold mb-2">User Details</h2>
-        <p className="text-gray-700">Name: John Doe</p>
-        <p className="text-gray-700">Email: john.doe@example.com</p>
-        {/* Add more user details as needed */}
-      </div>
-      <div className="mt-4">
-        <h2 className="text-xl font-semibold mb-2">Recent Activities</h2>
-        <ul className="list-disc list-inside">
-          <li className="text-gray-700">Logged in at 10:00 AM</li>
-          <li className="text-gray-700">Updated profile at 10:30 AM</li>
-          {/* Add more activities as needed */}
-        </ul>
+    <div className="flex NavbarUser flex-col items-center  h-screen overflow-auto">
+      <div className="max-w-[800px]">
+        <h1 className="text-4xl font-bold text-gray-800 text-center mt-2">
+          Welcome to Home Page
+        </h1>
+        <p className="text-lg text-gray-600 mt-2 text-center mb-2">
+          This is your home page content.
+        </p>
+        <div className="space-y-4">
+          <PostRight />
+        </div>
       </div>
     </div>
   );
