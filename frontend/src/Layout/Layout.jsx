@@ -4,7 +4,7 @@ import Login from "../components/Auth/Login";
 const Layout = () => {
   return (
     <div className="relative  min-h-screen">
-      <div className="absolute inset-0 bg-gray-100 -z-10"></div>
+      <div className="fixed inset-0 bg-gray-100  -z-10"></div>
       <NavBar />
       <Outlet />
     </div>
