@@ -66,9 +66,7 @@
         display: none;
         /* Chrome, Safari */
     }
-
-    body,
-    .app-container {
-        min-height: 100dvh;
-        /* Dynamic viewport height, tránh lỗi thanh URL */
+    body, .app-container {
+        min-height: 100dvh; /* Dynamic viewport height, tránh lỗi thanh URL */
     }
+    
