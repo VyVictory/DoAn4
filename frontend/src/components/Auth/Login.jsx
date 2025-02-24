@@ -55,8 +55,13 @@ export default function Login({ chaneform }) {
           autoClose: 500,
         });
 
+
         setTimeout(() => {
-          window.location.reload(); // Reload lại trang để cập nhật UI
+          if (window.location.pathname === "/login") {
+            window.location.href = "/";
+          } else {
+            window.location.reload();
+          }
         }, 1000);
 
         setShowLogin(false);
