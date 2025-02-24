@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../context/AuthProvider";
 import { register } from "../../service/auth";
+import authToken from "../../service/storage/authToken";
 
 export default function Register({ chaneform }) {
   const { setShowLogin } = useAuth();
@@ -44,9 +45,17 @@ export default function Register({ chaneform }) {
     if (Object.keys(validationErrors).length === 0) {
       try {
         const response = await register(formData);
+        console.log(response);
         if (response) {
+          authToken.setToken(response.token);
           toast.success("Đăng ký thành công!");
-          setTimeout(() => setShowLogin(false), 1000);
+          setTimeout(() => {
+            if (window.location.pathname === "/login") {
+              window.location.href = "/";
+            } else {
+              window.location.reload();
+            }
+          }, 1000);
         }
       } catch (error) {
         toast.error("Đăng ký thất bại, vui lòng thử lại.");
@@ -66,7 +75,7 @@ export default function Register({ chaneform }) {
 
   return (
     <div className="flex justify-center items-center h-screen w-full  ">
-      <div className="bg-white backdrop-blur-md shadow-2xl  rounded-2xl w-full max-w-lg p-6 md:py-8">
+      <div className="bg-white backdrop-blur-md  shadow-inner shadow-gray-400 rounded-2xl w-full max-w-lg p-6 md:py-10 md:px-8">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl w-full text-center font-bold text-gray-800">
             Đăng ký
@@ -144,7 +153,7 @@ export default function Register({ chaneform }) {
                 name="gender"
                 value={formData.gender}
                 onChange={handleChange}
-                className="mt-2 block w-full px-4 py-3 min-h-[46.3px] rounded-lg focus:ring-2 focus:ring-blue-300 focus:outline-none bg-gray-50 shadow-inner shadow-gray-300"
+                className="mt-2 block w-full px-4 py-3 min-h-[46.3px] rounded-lg focus:ring-2 focus:ring-blue-300 focus:outline-none bg-gray-50 shadow-inner shadow-gray-400"
               >
                 <option value="">Chọn</option>
                 <option value="Male">Nam</option>
@@ -159,12 +168,12 @@ export default function Register({ chaneform }) {
 
           <button
             onClick={handleSubmit}
-            className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition"
+            className="w-full py-3 text-white font-semibold bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg shadow-sm shadow-violet-600 hover:from-blue-600 hover:to-purple-600 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300"
           >
             Đăng ký
           </button>
 
-          <div className="text-center text-sm mt-4 text-gray-600">
+          <div className="w-full flex justify-between text-sm mt-4 text-gray-600">
             <span>Đã có tài khoản?</span>{" "}
             <button
               onClick={() => chaneform("login")}
@@ -199,7 +208,7 @@ const InputField = ({
       value={value}
       onChange={onChange}
       placeholder={onHoder}
-      className={`mt-2 block w-full px-4 py-3  rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-300 focus:outline-none shadow-inner shadow-gray-300 ${
+      className={`mt-2 block w-full px-4 py-3  rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-300 focus:outline-none shadow-inner shadow-gray-400 ${
         error ? "border-red-500" : "border-gray-300"
       }`}
     />

@@ -48,20 +48,27 @@ export const register = async (req, res) => {
     await newUser.save();
     const token = jwt.sign(
       {
-        user: {
           _id: newUser._id,
-          firstName: firstName.trim(),
-          lastName: lastName.trim(),
+          firstName: newUser.firstName.trim(),
+          lastName: newUser.lastName.trim(),
           email: newUser.email,
           birthDate: newUser.birthDate,
           gender: newUser.gender,
-        },
+
       },
       SECRET_KEY,
       { expiresIn: "1h" }
     );
     res.status(201).json({
       message: "User registered successfully",
+      user:{
+        _id: newUser._id,
+        firstName: newUser.firstName.trim(),
+        lastName: newUser.lastName.trim(),
+        email: newUser.email,
+        birthDate: newUser.birthDate,
+        gender: newUser.gender,
+      },
       token,
     });
   } catch (error) {

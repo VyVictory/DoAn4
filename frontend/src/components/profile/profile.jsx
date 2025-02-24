@@ -6,6 +6,7 @@ import React, {
   useMemo,
 } from "react";
 import { useAuth } from "../../components/context/AuthProvider";
+import { useNavigate } from "react-router-dom";
 import {
   ChevronDownIcon,
   Bars3Icon,
@@ -16,8 +17,19 @@ import avt from "../../img/DefaultAvatar.jpg";
 import "../../css/post.css";
 import Post from "./post/post";
 import pictureBG from "../../img/sky.webp";
+
 const Profile = () => {
-  const { profile } = useAuth();
+  const { profile, isLoadingProfile } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log(isLoadingProfile);
+    console.log(profile);
+    if (!profile && isLoadingProfile == false) {
+      navigate("/login");
+    }
+  }, [profile, navigate, isLoadingProfile]);
+
   const scrollRef = useRef(null);
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });

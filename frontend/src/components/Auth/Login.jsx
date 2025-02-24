@@ -93,7 +93,11 @@ export default function Login({ chaneform }) {
         });
 
         setTimeout(() => {
-          window.location.reload();
+          if (window.location.pathname === "/login") {
+            window.location.href = "/";
+          } else {
+            window.location.reload();
+          }
         }, 1000);
 
         setShowLogin(false);
@@ -124,7 +128,7 @@ export default function Login({ chaneform }) {
 
   return (
     <div className="flex justify-center items-center h-screen w-full">
-      <div className="bg-white backdrop-blur-md shadow-lg shadow-gray-500 rounded-2xl w-full my-4 max-w-sm">
+      <div className="bg-white shadow-inner backdrop-blur-md  shadow-gray-400 rounded-2xl w-full my-4 max-w-sm">
         <div className="p-10 px-8">
           <div className="flex justify-between items-center">
             <button
@@ -149,7 +153,7 @@ export default function Login({ chaneform }) {
               name="identifier"
               value={formData.identifier}
               onChange={handleChange}
-              className="mt-2 block w-full px-4 py-3 text-gray-700 bg-gray-50 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none  shadow-inner shadow-gray-300"
+              className="mt-2 block w-full px-4 py-3 text-gray-700 bg-gray-50 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none  shadow-inner shadow-gray-400"
               placeholder="Nhập email hoặc số điện thoại"
             />
             {errors.identifier && (
@@ -169,7 +173,7 @@ export default function Login({ chaneform }) {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className="mt-2 block w-full px-4 py-3 text-gray-700 bg-gray-50 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none  shadow-inner shadow-gray-300"
+              className="mt-2 block w-full px-4 py-3 text-gray-700 bg-gray-50 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none  shadow-inner shadow-gray-400"
               placeholder="Nhập mật khẩu"
             />
             {errors.password && (
@@ -187,7 +191,7 @@ export default function Login({ chaneform }) {
           <button
             onClick={handleSubmit}
             type="submit"
-            className="w-full py-3 text-white font-semibold bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg shadow-lg hover:from-blue-600 hover:to-purple-600 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300"
+            className="w-full py-3 text-white font-semibold bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg shadow-sm shadow-violet-600 hover:from-blue-600 hover:to-purple-600 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300"
             disabled={loading}
           >
             {loading ? "Đang xử lý..." : "Đăng nhập"}

@@ -10,7 +10,6 @@ export const AuthProvider = ({ children }) => {
 
   // Hàm gọi API để lấy thông tin người dùng
   const fetchProfile = async () => {
-    setIsLoadingProfile(true); // 🟢 Bắt đầu tải profile
     try {
       const userData = await getProfile();
       console.log(userData);
@@ -19,6 +18,7 @@ export const AuthProvider = ({ children }) => {
       console.error("Error fetching profile:", error);
       setProfile(null);
     } finally {
+      console.log('awdw')
       setIsLoadingProfile(false); // 🟢 Đánh dấu đã load xong
     }
   };
