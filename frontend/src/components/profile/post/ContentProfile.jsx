@@ -7,7 +7,9 @@ import React, {
 } from "react";
 import { useAuth } from "../../context/AuthProvider";
 import "../../../css/post.css";
-const Post = () => {
+import PostLeft from "./PostLeft";
+import PostRight from "./PostRigh";
+const ContentProfile = () => {
   const { profile } = useAuth();
   const scrollRef = useRef(null);
   const targetRef = useRef(null);
@@ -65,19 +67,7 @@ const Post = () => {
           }`}
         >
           <div className="flex flex-col  w-2/5 space-y-4 md:pl-4">
-            {[...Array(6)].map((_, index) => (
-              <div
-                className={`border border-gray-200 bg-white rounded-lg Post p-2 ShadowContent `}
-                key={index}
-              >
-                HÌNH ẢNH VÀ VIDEO BẠN ĐANG XEM LÀ 100% TỪ GAME Tặng VIPcode:
-                VIP666 l DGDL999 l RONGTHAN Webgame chơi Online ngay trên PC
-                Game MMO Fantasy phép thuật, cơ giáp và luyện rồng Luyện BOSS
-                tay to, rơi đồ kín màn hình Bản đồ siêu lớn, khám phá miễn phí
-                Auto tiện ích miễn phí, treo máy dễ dàng, cân bằng học tập và
-                làm việc.{index}
-              </div>
-            ))}
+            <PostLeft />
           </div>
           <div className="  min-h-screen w-3/5 hidden md:block"></div>
         </div>
@@ -100,19 +90,7 @@ const Post = () => {
               className="flex flex-col space-y-4   md:w-3/5 px-5 md:pr-4 md:px-0"
               style={{ pointerEvents: "auto" }}
             >
-              {[...Array(20)].map((_, index) => (
-                <div
-                  className="border border-gray-200 bg-white rounded-lg Post p-2 w-full ShadowContent"
-                  key={index}
-                >
-                  HÌNH ẢNH VÀ VIDEO BẠN ĐANG XEM LÀ 100% TỪ GAME Tặng VIPcode:
-                  VIP666 l DGDL999 l RONGTHAN Webgame chơi Online ngay trên PC
-                  Game MMO Fantasy phép thuật, cơ giáp và luyện rồng Luyện BOSS
-                  tay to, rơi đồ kín màn hình Bản đồ siêu lớn, khám phá miễn phí
-                  Auto tiện ích miễn phí, treo máy dễ dàng, cân bằng học tập và
-                  làm việc.
-                </div>
-              ))}
+              <PostRight />
             </div>
           </div>
         </div>
@@ -121,4 +99,4 @@ const Post = () => {
   );
 };
 
-export default Post;
+export default ContentProfile;

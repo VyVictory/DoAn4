@@ -15,7 +15,7 @@ import {
 import { Menu } from "@headlessui/react";
 import avt from "../../img/DefaultAvatar.jpg";
 import "../../css/post.css";
-import Post from "./post/post";
+import Post from "./post/ContentProfile";
 import pictureBG from "../../img/sky.webp";
 
 const Profile = () => {
