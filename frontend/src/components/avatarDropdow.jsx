@@ -9,7 +9,7 @@ import {
   Cog6ToothIcon,
 } from "@heroicons/react/24/solid";
 import { useModule } from "./context/Module";
-const AvatarDropdown = ({ avt }) => {
+const AvatarDropdow = ({ avt }) => {
   const { setUsecase } = useModule();
   const [isOpen, setIsOpen] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
@@ -177,4 +177,4 @@ const AvatarDropdown = ({ avt }) => {
   );
 };
 
-export default AvatarDropdown;
+export default AvatarDropdow;
