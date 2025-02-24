@@ -38,18 +38,23 @@ const Privacy = ({ isOpen, onClose }) => {
 
   return (
     isOpen && (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+      <div className="w-full min-h-full fixed z-50 bg-black bg-opacity-50 transition-opacity flex items-center justify-center inset-0">
         <div ref={modalRef} className="bg-white p-6 rounded-xl shadow-lg w-96">
-          <h2 className="text-xl font-bold text-center mb-4">Chỉnh sửa thông tin</h2>
+          <h2 className="text-xl font-bold text-center mb-4">
+            Chỉnh sửa thông tin
+          </h2>
           <div className="space-y-4">
             {["email", "password", "phone"].map((field) => (
-              <div key={field} className="flex items-center justify-between bg-gray-100 p-3 rounded-lg">
+              <div
+                key={field}
+                className="flex items-center justify-between bg-gray-100 p-3 rounded-lg"
+              >
                 {editingField === field ? (
                   <input
                     type={field === "password" ? "password" : "text"}
                     value={profile[field]}
                     onChange={handleChange}
-                    className="w-full p-2 border rounded-md"
+                    className="w-full p-2 border rounded-md focus:ring-0 focus:ring-none focus:outline-none"
                   />
                 ) : (
                   <span className="flex-1">{profile[field]}</span>
@@ -81,4 +86,3 @@ const Privacy = ({ isOpen, onClose }) => {
 };
 export default Privacy;
 // Component chính để hiển thị nút mở modal
-

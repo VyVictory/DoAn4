@@ -12,11 +12,11 @@ import Auth from "../Layout/Auth.jsx";
 import AdminPage from "../pages/AdminPage";
 import UserPage from "../pages/UserPage";
 import Messages from "../pages/messager/Messages.jsx";
-import { useAuth } from "../components/AuthProvider.jsx";
+import { useAuth } from "../components/context/AuthProvider.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Profile from "../pages/profile/profile.jsx";
-import Profile1 from "../components/profile/profile.jsx";
+// import Profile from "../pages/profile/profile.jsx";
+import Profile from "../components/profile/profile.jsx";
 import Test from "../pages/test.jsx";
 import { useEffect } from "react";
 const AppRouter = () => (
@@ -25,7 +25,7 @@ const AppRouter = () => (
       <Route path="/" element={<UserPage />} />
       <Route path="/messages" element={<Messages />} />
       <Route path="/profile" element={<Profile />} />
-      <Route path="/profile1" element={<Profile1 />} />
+      {/* <Route path="/profile1" element={<Profile1 />} /> */}
       {/* Các route khác */}
     </Route>
     <Route path="/admin" element={<AdminPage />} />

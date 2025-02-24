@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuth } from '../components/AuthProvider';
+import { useAuth } from '../components/context/AuthProvider';
 import Login from '../components/Auth/Login';
 import Register from '../components/Auth/Register';
 

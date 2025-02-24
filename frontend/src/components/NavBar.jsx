@@ -16,8 +16,8 @@ import {
 import logo from "../img/logo.gif";
 import avt from "../img/DefaultAvatar.jpg";
 import LinkTo from "./LinkTo";
-import AvatarDropdown from "./avatarDropdow";
-import { useAuth } from "./AuthProvider";
+import AvatarDropdown from "./AvatarDropdow.jsx";
+import { useAuth } from "./context/AuthProvider";
 
 const NavBar = () => {
   const { showLogin, setShowLogin, profile, isLoadingProfile } = useAuth();

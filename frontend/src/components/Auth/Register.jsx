@@ -4,7 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import NotificationCss from "../NotificationCss";
-import { useAuth } from "../AuthProvider";
+import { useAuth } from "../context/AuthProvider";
 import { register } from "../../service/auth"; // Ensure you're importing the register function
 export default function Register({ chaneform }) {
   const { showLogin, setShowLogin } = useAuth();

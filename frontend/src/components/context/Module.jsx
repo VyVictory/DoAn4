@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import Privacy from "./Auth/Privacy";
+import Privacy from "../Auth/Privacy";
 
 const ModuleContext = createContext();
 export const ModuleProvider = ({ children }) => {
@@ -11,7 +11,7 @@ export const ModuleProvider = ({ children }) => {
   return (
     <ModuleContext.Provider value={{ usecase, setUsecase }}>
       {children}
-      <Privacy isOpen={usecase=='Privacy'} onClose={() => setModalOpen(false)} />
+      <Privacy isOpen={usecase=='Privacy'} onClose={() => setUsecase(null)} />
     </ModuleContext.Provider>
   );
 };

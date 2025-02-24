@@ -3,10 +3,9 @@ import { Outlet } from "react-router-dom";
 import Login from "../components/Auth/Login";
 const Layout = () => {
   return (
-    <div className="relative bg-gray-100">
+    <div className="relative bg-gray-100 min-h-screen">
       <NavBar />
-       
-        <Outlet /> 
+      <Outlet />
     </div>
   );
 };

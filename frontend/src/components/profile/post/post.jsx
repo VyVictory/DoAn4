@@ -5,8 +5,8 @@ import React, {
   useCallback,
   useMemo,
 } from "react";
-import { useAuth } from "../../components/AuthProvider";
-import "../../css/post.css";
+import { useAuth } from "../../context/AuthProvider";
+import "../../../css/post.css";
 const Post = () => {
   const { profile } = useAuth();
   const scrollRef = useRef(null);

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useAuth } from "./AuthProvider";
+import { useAuth } from "./context/AuthProvider";
 import authToken from "../service/storage/authToken";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -8,7 +8,7 @@ import {
   MoonIcon,
   Cog6ToothIcon,
 } from "@heroicons/react/24/solid";
-import { useModule } from "./module";
+import { useModule } from "./context/Module";
 const AvatarDropdown = ({ avt }) => {
   const { setUsecase} = useModule();
   const [isOpen, setIsOpen] = useState(false);
@@ -92,7 +92,7 @@ const AvatarDropdown = ({ avt }) => {
                 <a
                   href="#"
                   className="flex flex-row items-center px-4 py-2 h  rounded-md hover:scale-105 hover:bg-violet-100"
-                  onClick={()=>{setUsecase("Privacy")}}
+                  onClick={()=>{setUsecase("Privacy"),setIsOpen(false)}}
                 >
                   <Cog6ToothIcon className="h-8 w-8 p-1 bg-gray-50  rounded-full text-gray-800" />
                   <span className="pl-4">Settings</span>

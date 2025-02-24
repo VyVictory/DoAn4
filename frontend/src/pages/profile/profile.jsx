@@ -5,7 +5,7 @@ import React, {
   useCallback,
   useMemo,
 } from "react";
-import { useAuth } from "../../components/AuthProvider";
+import { useAuth } from "../../components/context/AuthProvider";
 import {
   ChevronDownIcon,
   Bars3Icon,
@@ -15,6 +15,7 @@ import { Menu } from "@headlessui/react";
 import avt from "../../img/DefaultAvatar.jpg";
 import "../../css/post.css";
 import Post from "./post";
+import pictureBG from "../../img/sky.webp";
 const Profile = () => {
   const { profile } = useAuth();
   const scrollRef = useRef(null);
@@ -32,9 +33,16 @@ const Profile = () => {
       <div className="w-full  flex-col relative min-h-screen ">
         <div className="w-full  flex items-center flex-col bg-white shadow-sm  shadow-slate-300">
           <div className="profileW w-full z-10 px-4">
-            <button className="relative h-[40vh] bg-red-400 w-full rounded-b-lg profileW flex-shrink z-0">
+            <button
+              className="relative h-[40vh] w-full rounded-b-xl profileW flex-shrink z-0"
+              style={{
+                backgroundImage: `url(${pictureBG})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            >
               <div ref={scrollRef}></div>
-              <span className="absolute inset-0 bg-black opacity-0 transition-opacity duration-200 hover:opacity-5"></span>
+              <span className="absolute inset-0 bg-black opacity-0 transition-opacity duration-200 hover:opacity-20 rounded-b-xl"></span>
             </button>
             <div className=" flex flex-col md:flex-row md:justify-between justify-center mx-10 md:pb-3 border-b">
               <div className="flex md:flex-row items-center md:space-x-3 flex-col">

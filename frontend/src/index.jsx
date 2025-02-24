@@ -4,8 +4,8 @@ import "typeface-open-sans";
 import React from "react";
 import ReactDOM from "react-dom";
 import AppRouter from "./router/AppRouter";
-import { AuthProvider } from "./components/AuthProvider";
-import { ModuleProvider } from "./components/module";
+import { AuthProvider } from "./components/context/AuthProvider";
+import { ModuleProvider } from "./components/context/Module";
 
 import { GoogleOAuthProvider } from "@react-oauth/google";
 

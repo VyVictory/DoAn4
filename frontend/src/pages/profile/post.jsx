@@ -5,7 +5,7 @@ import React, {
   useCallback,
   useMemo,
 } from "react";
-import { useAuth } from "../../components/AuthProvider";
+import { useAuth } from "../../components/context/AuthProvider";
 import "../../css/post.css";
 const Post = () => {
   const { profile } = useAuth();

@@ -25,7 +25,7 @@ app.use('/cmt', routerCmt);
 app.use('/group', routerGroup);
 app.use('/noti', routerNotifi);
 
-mongoose.connect('mongodb+srv://vyvictory:1234567899@cluster0.vahim.mongodb.net/', {
+mongoose.connect('mongodb+srv://vyvictory:1234567899@cluster0.vahim.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }).then(() => {
