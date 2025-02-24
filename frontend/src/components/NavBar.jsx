@@ -16,7 +16,7 @@ import {
 import logo from "../img/logo.gif";
 import avt from "../img/DefaultAvatar.jpg";
 import LinkTo from "./LinkTo";
-import AvatarDropdow from './AvatarDropdow'
+import UserDropDow from "./UserDropDow";
 import { useAuth } from "./context/AuthProvider";
 
 const NavBar = () => {
@@ -196,7 +196,7 @@ const NavBar = () => {
             //     className="w-full h-full object-cover"
             //   />
             // </button>
-            <AvatarDropdow avt={avt} />
+            <UserDropDow avt={avt} />
           ) : (
             <button
               onClick={() => setShowLogin(true)}

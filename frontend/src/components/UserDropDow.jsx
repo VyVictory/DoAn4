@@ -9,7 +9,7 @@ import {
   Cog6ToothIcon,
 } from "@heroicons/react/24/solid";
 import { useModule } from "./context/Module";
-const AvatarDropdow = ({ avt }) => {
+const UserDropDow = ({ avt }) => {
   const { setUsecase } = useModule();
   const [isOpen, setIsOpen] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
@@ -117,7 +117,7 @@ const AvatarDropdow = ({ avt }) => {
             <div className="py-2 px-2 flex ">
               <button
                 onClick={() => setShowLogoutConfirm(true)}
-                className="w-full px-4 py-2 text-sm flex flex-row justify-center items-center hover:bg-red-50 hover:bg-gray-200 rounded-lg"
+                className="w-full px-4 py-2 text-sm flex flex-row justify-center items-center hover:bg-red-50   rounded-lg"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -177,4 +177,4 @@ const AvatarDropdow = ({ avt }) => {
   );
 };
 
-export default AvatarDropdow;
+export default UserDropDow;
