@@ -1,0 +1,30 @@
+# Tên được hiển thị ở action page của repository
+name: Dispatch assets files updated
+on:
+  # monitor push vào Assets (trở xuống) của nhánh master
+  push:
+    branches:
+      - master
+    paths:
+      - Assets/*
+jobs:
+  # JOB ID（Bất kỳ thứ gì bắt đầu bằng ký tự chữ cái hoặc _ và bao gồm các ký tự chữ và số và -, _ đều được）
+  dispatch-directory-changes:
+    strategy:
+      matrix:
+        # Có thể define sẵn setting của các JOB. Tại đây, define sẵn danh sách repository sẽ nhận thông báo.
+        repo: ['<Owner name>/frontend']
+    name: Do dispatch-directory-changes
+    # Type của máy chạy job
+    runs-on: ubuntu-latest
+    steps:
+      # Sử dụng `peter-evans/repository-dispatch` để nhận thông báo bằng `repository_dispatch` trong repository phía app
+      - name: Do repository-dispatch
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          # Set token cho Private Repository
+          token: ${{ secrets.<GitHub secret key name> }}
+          # Chỉ định repository đối tượng noti đã được define sẵn
+          repository: ${{ matrix.repo }}
+          # Event type để sẵn là: `directory-changes` 
+          event-type: directory-changes
