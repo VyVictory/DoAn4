@@ -12,11 +12,11 @@ import {
   Bars3Icon,
   PencilIcon,
 } from "@heroicons/react/24/solid";
-import { Menu } from "@headlessui/react";
 import avt from "../../img/DefaultAvatar.jpg";
 import "../../css/post.css";
 import Post from "./post/ContentProfile";
 import pictureBG from "../../img/sky.webp";
+import MenuProfile from "./MenuProfile";
 
 const Profile = () => {
   const { profile, isLoadingProfile } = useAuth();
@@ -98,50 +98,7 @@ const Profile = () => {
                 </button>
               </div>
             </div>
-            <div className="w-full shadow-gray-400 z-10 flex justify-between items-center">
-              <div className="w-full py-1 flex justify-between">
-                <div className="flex flex-row space-x-2">
-                  {["Bài viết", "About", "Bạn bè", "Videos", "Nhóm"].map(
-                    (item, index) => (
-                      <button
-                        key={index}
-                        className={`hover:bg-gray-100 p-3 rounded-xl  ${
-                          index > 2 ? "hidden md:block" : ""
-                        } `}
-                      >
-                        {item}
-                      </button>
-                    )
-                  )}
-                  <Menu
-                    as="div"
-                    className="relative inline-block text-left sm:hidden"
-                  >
-                    <Menu.Button className="hover:bg-gray-200 p-3 rounded-xl flex items-center">
-                      More <ChevronDownIcon className="w-5 h-5 ml-1" />
-                    </Menu.Button>
-                    <Menu.Items className="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-md border z-[100]  transition-opacity ">
-                      {["Videos", "Nhóm"].map((item, index) => (
-                        <Menu.Item key={index}>
-                          {({ active }) => (
-                            <button
-                              className={`w-full text-left px-4 py-2 rounded-md ${
-                                active ? "bg-gray-100" : ""
-                              }`}
-                            >
-                              {item}
-                            </button>
-                          )}
-                        </Menu.Item>
-                      ))}
-                    </Menu.Items>
-                  </Menu>
-                </div>
-                <button className="md:mr-6 ">
-                  <Bars3Icon className="h-8 w-8 hover:text-blue-400 hover:scale-125 bg-gray-50 hover:bg-gray-100 hover:rounded-md rounded-md p-1" />
-                </button>
-              </div>
-            </div>
+            <MenuProfile />
           </div>
         </div>
 

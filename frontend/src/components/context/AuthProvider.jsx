@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
       setIsLoadingProfile(false); // 🟢 Đánh dấu đã load xong
     }
   };
-
+  
   // Lấy thông tin người dùng ngay khi component mount
   useEffect(() => {
     fetchProfile();

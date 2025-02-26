@@ -41,7 +41,7 @@ const App = () => {
     <Router>
       {showLogin && <Auth />}
       <AppRouter />
-      <ToastContainer position="top-right" className='NavbarUser' autoClose={3000} limit={3} />
+      <ToastContainer position="top-left" autoClose={3000} limit={3} />
     </Router>
   );
 };

@@ -1,9 +1,11 @@
-const apiAuth = 'https://doan4-5by5.onrender.com/auth';
-const api = 'https://doan4-5by5.onrender.com/';
-const apiUser = 'https://doan4-5by5.onrender.com/user';
+let uri = "http://localhost:3001/";
+//https://doan4-5by5.onrender.com/
+const apiAuth = uri + "auth";
+const api = uri + "";
+const apiUser = uri + "user";
 
 export default {
-    apiAuth,
-    api,
-    apiUser,
+  apiAuth,
+  api,
+  apiUser,
 };

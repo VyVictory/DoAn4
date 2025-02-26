@@ -25,7 +25,7 @@ const PostRight = () => {
             Viết bài viết ...
           </button>
         </div>
-        <div className="pt-2 flex flex-row w-full justify-between">
+        <div className="pt-2 flex flex-row flex-wrap w-full justify-between">
           <button className="flex flex-row p-2 bg-gray-50 rounded-lg space-x-2 hover:bg-gray-100">
             <PhotoIcon className="h-6 w-6 text-blue-500" />
             <span>Hình ảnh/Video</span>
@@ -55,7 +55,7 @@ const PostRight = () => {
               </button>
               <div className="flex flex-col justify-center">
                 <div className="mt-2">Name</div>
-                <div className="text-gray-500 flex flex-row space-x-2 items-center">
+                <div className="text-gray-500 flex flex-row flex-wrap space-x-2 items-center">
                   <div>01/01/2025 lúc 12:23</div>
                   <div className=" flex flex-row items-center">
                     <UserGroupIcon className="h-4 w-4 text-green-500" />

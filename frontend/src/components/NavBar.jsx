@@ -142,7 +142,7 @@ const NavBar = () => {
                 <input
                   type="text"
                   onClick={() => setIsSearchVisible(true)}
-                  placeholder="Tìm kiếm trên ZaFaCook"
+                  placeholder="Tìm kiếm trên O no"
                   className="w-full py-2 h-10 border rounded-md focus:outline-none focus:ring-0 bg-transparent border-none"
                 />
               </div>

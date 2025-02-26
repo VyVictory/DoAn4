@@ -8,6 +8,11 @@
         color: gray;
     }
 
+    * {
+        padding: 0px;
+        margin: 0px;
+    }
+
     .NavbarUser {
         padding-top: 56px;
         /* Chiều cao của NavBar */
@@ -66,7 +71,9 @@
         display: none;
         /* Chrome, Safari */
     }
-    body, .app-container {
-        min-height: 100dvh; /* Dynamic viewport height, tránh lỗi thanh URL */
+
+    body,
+    .app-container {
+        min-height: 100dvh;
+        /* Dynamic viewport height, tránh lỗi thanh URL */
     }
-    

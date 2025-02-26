@@ -95,7 +95,7 @@ const Messages = () => {
             <AnimatePresence>
               {searchText && (
                 <motion.button
-                  onClick={() => setSearchText("")}
+                  onClick={() => setSearchText(false)}
                   initial={{ opacity: 0, x: -20 }} // Bắt đầu mờ và lệch trái
                   animate={{ opacity: 1, x: 0 }} // Trượt vào
                   exit={{ opacity: 0, x: -20 }} // Trượt ra khi ẩn
@@ -114,19 +114,18 @@ const Messages = () => {
               transition={{ duration: 0.3, ease: "easeInOut" }} // 🟢 Fix hiệu ứng thụt từ từ
               className="flex items-center w-full max-w-lg bg-violet-100 rounded-3xl shadow-sm pl-2 transition duration-300 ease-in-out"
             >
-              <button className="h-10 w-10 hover:scale-125 justify-center text-violet-300 hover:text-violet-700 rounded-full transition duration-300 ease-in-out">
+              <button 
+              onClick={()=>{setSearchText(false)}}
+              className="h-10 w-10 hover:scale-125 justify-center text-violet-300 hover:text-violet-700 rounded-full transition duration-300 ease-in-out">
                 <MagnifyingGlassIcon className="max-h-6" />
               </button>
               <input
                 type="text"
-                placeholder="Tìm kiếm trên ZaFaCook"
+                placeholder="Tìm kiếm trên O no"
                 onClick={() => {
-                  if (searchText === "") {
-                    setSearchText(" ");
-                  }
+                    setSearchText(true);
                 }}
                 className="w-full h-10 pr-2 pl-1 text-gray-700 bg-transparent outline-none rounded-full focus:ring-0"
-                onChange={(e) => setSearchText(e.target.value)}
               />
             </motion.div>
           </div>

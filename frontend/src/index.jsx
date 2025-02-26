@@ -8,7 +8,7 @@ import { AuthProvider } from "./components/context/AuthProvider";
 import { ModuleProvider } from "./components/context/Module";
 
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 serviceWorkerRegistration.register();
 ReactDOM.render(
   <AuthProvider>

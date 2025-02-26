@@ -55,7 +55,7 @@ const ContentProfile = () => {
   }, [handleScroll]);
   return (
     <div
-      className="relative flex w-full justify-center  " //bg-black
+      className="relative flex  justify-center  " //bg-black
       style={{ minHeight: heightBG }}
     >
       {/* left */}
