@@ -90,7 +90,7 @@ const NavBar = () => {
   }, []);
   return (
     <nav
-      className="HighNavbar bg-white shadow-md fixed w-screen flex justify-items-center z-40"
+      className="HighNavbar bg-white shadow-md fixed w-screen flex justify-items-center z-40 "
       style={{ minWidth: "screen" }}
     >
       <div className="flex w-[100%] ">
@@ -163,9 +163,9 @@ const NavBar = () => {
 
         <div className="flex-grow"></div>
         {/* Right: Profile and Menu */}
-        <div className="flex items-center space-x-3 pr-4">
+        <div className="flex items-center sm:space-x-2 space-x-1 pr-4 ">
           <button
-            className="md:hidden bg-gray-100 p-2 rounded-full hover:bg-blue-100 hover:ring-2 hover:ring-blue-200 transition duration-300"
+            className="lg:hidden  bg-gray-100 p-2 rounded-full hover:bg-blue-100 hover:ring-2 hover:ring-blue-200 transition duration-300"
             onClick={toggleMenu}
           >
             <Bars3Icon className="h-7 w-7 text-gray-700 hover:text-blue-500 transition" />
@@ -198,12 +198,14 @@ const NavBar = () => {
             // </button>
             <UserDropDow avt={avt} />
           ) : (
-            <button
-              onClick={() => setShowLogin(true)}
-              className="px-4 py-1 border rounded-md bg-violet-50 border-none  hover:bg-violet-200 transition"
-            >
-              Đăng nhập
-            </button>
+            <div className="h-full flex py-2">
+              <button
+                onClick={() => setShowLogin(true)}
+                className="px-4 border rounded-md bg-violet-50 border-none  hover:bg-violet-200 transition text-nowrap"
+              >
+                Đăng nhập
+              </button>
+            </div>
           )}
         </div>
 
@@ -211,7 +213,7 @@ const NavBar = () => {
       </div>
       {/* Center: Navigation Links */}
       <div className="h-[64px] absolute left-1/2 transform -translate-x-1/2 top-0 w-fit flex justify-center">
-        <ul className="HighNavbar hidden md:flex flex-row justify-center gap-3">
+        <ul className="HighNavbar hidden lg:flex flex-row justify-center gap-3">
           {menuItems.map(({ icon: Icon, namepage }, index) => (
             <div className="h-full py-1 flex items-center">
               {" "}
