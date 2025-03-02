@@ -9,6 +9,7 @@ const postSchema = new mongoose.Schema(
       required: true,
     },
     content: { type: String, required: true },
+    media: [{ type: String }],
     likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     shares: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],

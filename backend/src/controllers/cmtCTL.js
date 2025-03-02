@@ -3,7 +3,7 @@ import authMiddleware from '../middleware/authMiddleware.js';
 import Comment from '../models/comment.js';
 import Post from '../models/post.js';
 
-const router = express.Router();
+
 
 // Lấy bình luận
 export const getComment = async (req, res) => {
@@ -48,6 +48,7 @@ export const deleteComment = async (req, res) => {
 export const createComment = async (req, res) => {
     const { content } = req.body;
     const { postId } = req.params;
+    const media = req.files; // Lấy các tệp đã tải lên
 
     try {
         const post = await Post.findById(postId);
@@ -56,7 +57,8 @@ export const createComment = async (req, res) => {
         const newComment = new Comment({
             author: req.user._id,
             post: postId,
-            content: content.trim()
+            content: content.trim(),
+            media: media.map(file => file.path) // Lưu đường dẫn media từ Cloudinary
         });
 
         await newComment.save();
@@ -67,4 +69,4 @@ export const createComment = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: 'Error creating comment', error });
     }
-}
+};

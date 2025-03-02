@@ -2,11 +2,11 @@ import express from 'express';
 import authMiddleware from '../middleware/authMiddleware.js';
 import Post from '../models/post.js';
 
-const router = express.Router();
 
 // Đăng bài
 export const createPost = async (req, res) => {
     const { content } = req.body;
+    const media = req.files; // Lấy các tệp đã tải lên
 
     try {
         if (!req.user || !req.user._id) {
@@ -17,9 +17,15 @@ export const createPost = async (req, res) => {
             return res.status(400).json({ message: "Content cannot be empty" });
         }
 
+        // Kiểm tra xem có tệp nào được tải lên không
+        const mediaPaths = media ? media.map(file => file.path) : [];
+
+        console.log("Uploaded files:", media);
+
         const newPost = new Post({
             author: req.user._id,
             content: content.trim(),
+            media: mediaPaths // Lưu đường dẫn media từ Cloudinary
         });
 
         await newPost.save();
