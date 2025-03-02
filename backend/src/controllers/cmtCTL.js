@@ -1,6 +1,7 @@
 import express from 'express';
 import authMiddleware from '../middleware/authMiddleware.js';
 import Comment from '../models/comment.js';
+import Post from '../models/post.js';
 
 const router = express.Router();
 
@@ -42,23 +43,25 @@ export const deleteComment = async (req, res) => {
         res.status(500).json({ message: 'Error deleting comment', error });
     }
 };
+
 // Đăng bình luận
 export const createComment = async (req, res) => {
     const { content } = req.body;
+    const { postId } = req.params;
 
     try {
-        const comment = await Comment.findById(req.params.commentId);
-        if (!comment) return res.status(404).json({ message: 'Comment not found' });
+        const post = await Post.findById(postId);
+        if (!post) return res.status(404).json({ message: 'Post not found' });
 
         const newComment = new Comment({
-            author: req.user.id,
-            post: comment.post,
-            content
+            author: req.user._id,
+            post: postId,
+            content: content.trim()
         });
 
         await newComment.save();
-        comment.comments.push(newComment._id);
-        await comment.save();
+        post.comments.push(newComment._id);
+        await post.save();
 
         res.status(201).json(newComment);
     } catch (error) {
