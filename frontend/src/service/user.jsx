@@ -14,5 +14,15 @@ export const getProfile = async () => {
         throw error.response?.data || error.message;
     }
 };
+export const getCurrentUser = async (id) => {
+    try {
+        const response = await api.get('user/profile/' + id);
+        // console.log(response)
+        return response.data;
+    } catch (error) {
+        console.error('Get Profile Error:', error.response?.data || error.message);
+        throw error.response?.data || error.message;
+    }
+};
 
-export default getProfile;
+export default {getProfile, getCurrentUser};

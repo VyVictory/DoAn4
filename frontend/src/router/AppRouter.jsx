@@ -19,12 +19,13 @@ import "react-toastify/dist/ReactToastify.css";
 import Profile from "../components/profile/profile.jsx";
 import Test from "../pages/test.jsx";
 import { useEffect } from "react";
+import ProfileLayout from "../Layout/ProfileLayout.jsx";
 const AppRouter = () => (
   <Routes>
     <Route element={<Layout />}>
       <Route path="/" element={<UserPage />} />
       <Route path="/messages" element={<Messages />} />
-      <Route path="/profile" element={<Profile />} />
+      <Route path="/profile/*" element={<ProfileLayout />} />
       {/* <Route path="/profile1" element={<Profile1 />} /> */}
       {/* Các route khác */}
     </Route>
