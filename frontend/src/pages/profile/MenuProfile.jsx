@@ -24,13 +24,13 @@ const MenuPost = () => {
             return (
               <div
                 key={index}
-                className={`flex items-center ${
-                  isActive ? "pb-1 border-b-4 border-violet-300" : ""
-                } ${index>1&&'sm:block hidden'}`}
+                className={`flex items-center justify-center pt-1 ${
+                  isActive ? " border-b-4 border-violet-300" : " border-b-4 border-transparent"
+                } ${index > 1 && "sm:block hidden"}`}
               >
                 <Link
                   to={`${item.link}${location.search}`} // Giữ nguyên query parameters
-                  className={`hover:bg-gray-100 p-3 rounded-xl min-w-24 block text-center`}
+                  className="hover:bg-gray-100 p-3 rounded-xl min-w-24   h-full text-center flex flex-col justify-center"
                 >
                   {item.name}
                 </Link>
