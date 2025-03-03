@@ -16,7 +16,7 @@ export default function Auth() {
   const videoRef = useRef(null);
 
   // Danh sách video nền desktop
-  const desktopVideos = [bgVideo1, bgVideo2, bgVideo3, bgVideo4];
+  const desktopVideos = [bgVideo1, bgVideo2]//bgVideo3,,  bgVideo4]
 
   // State để lưu video phù hợp với thiết bị
   const [currentVideo, setCurrentVideo] = useState(null);

@@ -6,7 +6,7 @@ import {
   ShoppingBagIcon,
   MagnifyingGlassIcon,
   Bars3Icon,
-  XMarkIcon ,
+  XMarkIcon,
 } from "@heroicons/react/24/solid";
 import {
   ArrowLeftIcon,
@@ -211,12 +211,19 @@ const NavBar = () => {
             <UserDropDow avt={avt} />
           ) : (
             <div className="h-full flex py-2">
-              <button
+              {/* <button
                 onClick={() => setShowLogin(true)}
                 className="px-4 border rounded-md bg-violet-50 border-none  hover:bg-violet-200 transition text-nowrap"
               >
                 Đăng nhập
-              </button>
+              </button> */}
+              <a
+                href="/login"
+                className="px-4 border rounded-md bg-violet-50 border-none  hover:bg-violet-200 transition text-nowrap flex text-center items-center"
+              >
+                {" "}
+                Đăng nhập
+              </a>
             </div>
           )}
         </div>
