@@ -50,7 +50,7 @@ const Profile = () => {
   const scrollRef = useRef(null);
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, []);
+  }, [profileRender]);
 
   const followersInfo = useMemo(
     () => <div className="text-center">0 followers ❁ 9 following</div>,
