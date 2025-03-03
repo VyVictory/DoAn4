@@ -53,7 +53,7 @@ export default function CustomizedMenus({ css }) {
   };
 
   return (
-    <div className={`${css} py-2 pb-1 border-b-4 border-violet-300`}>
+    <div className={`${css} py-2 `}>
       <button
         onClick={handleClick}
         className="hover:bg-gray-200 p-3 rounded-xl flex items-center w-full"
