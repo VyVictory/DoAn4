@@ -123,5 +123,31 @@ export const deletePost = async (req, res) => {
     }
 };
 
+// Sửa bài đăng
+export const updatePost = async (req, res) => {
+    const { content } = req.body;
+    const media = req.files; // Lấy các tệp đã tải lên
+
+    try {
+        const post = await Post.findById(req.params.postId);
+        if (!post) return res.status(404).json({ message: 'Post not found' });
+
+        // Cập nhật nội dung nếu có
+        if (content) {
+            post.content = content.trim();
+        }
+
+        // Cập nhật media nếu có tệp mới được tải lên
+        if (media && media.length > 0) {
+            post.media = media.map(file => file.path);
+        }
+
+        await post.save();
+        res.json(post);
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating post', error });
+    }
+};
+
 
 

@@ -23,6 +23,8 @@ const userSchema = new mongoose.Schema(
       country: { type: String, default: "Vietnam" }, // Quốc gia (Mặc định là Việt Nam)
     },
     title: { type: String, default: "" }, // Danh sưng
+    authProvider: { type: String, enum: ['local', 'google', 'facebook', 'twitter'], default: 'local' },
+    authProviderId: { type: String },
     // Các tính năng mạng xã hội
   },
   { timestamps: true }

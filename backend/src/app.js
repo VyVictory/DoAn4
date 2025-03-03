@@ -7,6 +7,7 @@ import routerPost from './routes/postApi.js';
 import routerCmt from './routes/cmtApi.js';
 import routerGroup from './routes/groupApi.js';
 import routerNotifi from './routes/notifiApi.js';
+import passport from 'passport';
 const app = express();
 
 // Enable CORS for your frontend (localhost:3000)
@@ -17,6 +18,7 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.use(passport.initialize());
 
 app.use('/auth', authRoutes);
 app.use('/user', routerUser);

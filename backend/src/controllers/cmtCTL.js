@@ -70,3 +70,27 @@ export const createComment = async (req, res) => {
         res.status(500).json({ message: 'Error creating comment', error });
     }
 };
+export const updateComment = async (req, res) => {
+    const { content } = req.body;
+    const media = req.files; // Lấy các tệp đã tải lên
+
+    try {
+        const comment = await Comment.findById(req.params.commentId);
+        if (!comment) return res.status(404).json({ message: 'Comment not found' });
+
+        // Cập nhật nội dung nếu có
+        if (content) {
+            comment.content = content.trim();
+        }
+
+        // Cập nhật media nếu có tệp mới được tải lên
+        if (media && media.length > 0) {
+            comment.media = media.map(file => file.path);
+        }
+
+        await comment.save();
+        res.json(comment);
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating comment', error });
+    }
+};
