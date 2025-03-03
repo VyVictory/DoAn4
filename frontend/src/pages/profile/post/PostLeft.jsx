@@ -51,17 +51,21 @@ const PostLeft = ({ data }) => {
         <div className="flex flex-row space-x-2 items-center">
           <MapPinIcon className={`${iconSize} text-gray-500`} />
           <div>
-            {data?.address?.street ||
-            data?.address?.ward ||
-            data?.address?.district ||
-            data?.address?.country ||
-            data?.address?.city ? (
+            {data?.profile?.address?.street ||
+            data?.profile?.address?.ward ||
+            data?.profile?.address?.district ||
+            data?.profile?.address?.country ||
+            data?.profile?.address?.city ? (
               <>
-                {data.address.street && `${data.address.street}, `}
-                {data.address.ward && `${data.address.ward}, `}
-                {data.address.district && `${data.address.district}, `}
-                {data.address.city && `${data.address.city}, `}
-                {data.address.country}
+                {data.profile?.address.street &&
+                  `${data.profile?.address.street}, `}
+                {data.profile?.address.ward &&
+                  `${data.profile?.address.ward}, `}
+                {data.profile?.address.district &&
+                  `${data.profile?.address.district}, `}
+                {data.profile?.address.city &&
+                  `${data.profile?.address.city}, `}
+                {data.profile?.address.country}
               </>
             ) : (
               "chưa thiết lập"

@@ -19,6 +19,7 @@ import ContentProfile from "./post/ContentProfile";
 import pictureBG from "../../img/sky.webp";
 import MenuProfile from "./MenuProfile";
 import { useProfile } from "../../components/context/profile/ProfileProvider";
+import { m } from "framer-motion";
 
 const Profile = () => {
   const { profile, isLoadingProfile } = useAuth();
@@ -40,9 +41,9 @@ const Profile = () => {
   const id = urlParams.get("id");
   useEffect(() => {
     if (currentUser != null) {
-      setProfileRender(currentUser);
+      setProfileRender({myprofile:false,profile:currentUser});
     } else if (!id && isLoadingProfile == false) {
-      setProfileRender(profile);
+      setProfileRender({myprofile:true,profile:profile});
     }
   }, [currentUser, isLoadingProfile]);
 
@@ -64,6 +65,7 @@ const Profile = () => {
         <div className="w-full  flex items-center flex-col bg-white shadow-sm  shadow-slate-300">
           <div className="profileW w-full z-10 px-4">
             <button
+            // onClick={() => {}
               className="relative h-[40vh] w-full rounded-b-xl profileW flex-shrink z-0"
               style={{
                 backgroundImage: `url(${pictureBG})`,
@@ -86,9 +88,9 @@ const Profile = () => {
                 </button>
                 <div className="flex flex-col items-center">
                   <strong className="text-3xl text-center md:text-start w-full ">
-                    {(profileRender?.firstName ?? "") +
+                    {(profileRender?.profile?.firstName ?? "") +
                       " " +
-                      (profileRender?.lastName ?? "")}
+                      (profileRender?.profile?.lastName ?? "")}
                   </strong>
 
                   {followersInfo}
