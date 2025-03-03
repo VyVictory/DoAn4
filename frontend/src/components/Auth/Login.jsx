@@ -158,7 +158,7 @@ export default function Login({ chaneform }) {
               name="identifier"
               value={formData.identifier}
               onChange={handleChange}
-              className="mt-2 block w-full px-4 py-3 text-gray-700 bg-gray-50 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none  shadow-inner shadow-gray-400"
+              className="mt-2 block w-full px-4 py-3 text-gray-700 bg-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none  shadow-inner shadow-gray-200"
               placeholder="Nhập email hoặc số điện thoại"
             />
             {errors.identifier && (
@@ -178,7 +178,7 @@ export default function Login({ chaneform }) {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className="mt-2 block w-full px-4 py-3 text-gray-700 bg-gray-50 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none  shadow-inner shadow-gray-400"
+              className="mt-2 block w-full px-4 py-3 text-gray-700 bg-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none  shadow-inner shadow-gray-200"
               placeholder="Nhập mật khẩu"
             />
             {errors.password && (
