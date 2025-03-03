@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Bars3Icon } from "@heroicons/react/24/solid";
 import CustomizedMenus from "./CustomizedMenus";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const MenuPost = () => {
   const location = useLocation(); // Lấy đường dẫn URL hiện tại
@@ -20,12 +21,12 @@ const MenuPost = () => {
         <div className="space-x-1 flex flex-row flex-wrap ">
           {menuItems.map((item, index) => {
             const isActive = location.pathname === item.link; // Kiểm tra trang hiện tại
-            return index < 2 ? (
+            return (
               <div
                 key={index}
                 className={`flex items-center ${
                   isActive ? "pb-1 border-b-4 border-violet-300" : ""
-                }`}
+                } ${index>1&&'sm:block hidden'}`}
               >
                 <Link
                   to={`${item.link}${location.search}`} // Giữ nguyên query parameters
@@ -34,14 +35,12 @@ const MenuPost = () => {
                   {item.name}
                 </Link>
               </div>
-            ) : (
-              ""
             );
           })}
-          <CustomizedMenus menu={menuItems} css="md:hidden " />
+          <CustomizedMenus menu={menuItems} css="sm:hidden " />
         </div>
         <button className="md:mr-6">
-          <Bars3Icon className="h-8 w-8 hover:text-blue-400 hover:scale-125 bg-gray-50 hover:bg-gray-100 hover:rounded-md rounded-md p-1" />
+          <MoreVertIcon className="h-8 w-8 hover:text-blue-400 hover:scale-125 bg-gray-50 hover:bg-gray-100 hover:rounded-md rounded-md p-1" />
         </button>
       </div>
     </div>

@@ -65,7 +65,12 @@ export default function CustomizedMenus({ css }) {
         {menuItems.map((item, index) => {
           const isActive = location.pathname === item.link;
           return (
-            <MenuItem className="" key={index} onClick={handleClose} disableRipple>
+            <MenuItem
+              className=""
+              key={index}
+              onClick={handleClose}
+              disableRipple
+            >
               <span className="mr-2">{item.icon}</span>
               <Link
                 to={item.link} // Use Link instead of <a> for client-side navigation
