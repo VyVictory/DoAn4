@@ -1,4 +1,4 @@
-import React  from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -9,14 +9,13 @@ import {
 import Layout from "../Layout/Layout.jsx";
 import Auth from "../Layout/Auth.jsx";
 
-import AdminPage from "../pages/AdminPage";
 import UserPage from "../pages/UserPage";
 import Messages from "../pages/messager/Messages.jsx";
 import { useAuth } from "../components/context/AuthProvider.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import Profile from "../pages/profile/profile.jsx";
-import Profile from "../components/profile/profile.jsx";
+import Profile from "../pages/profile/profile.jsx";
 import Test from "../pages/test.jsx";
 import { useEffect } from "react";
 import ProfileLayout from "../Layout/ProfileLayout.jsx";
@@ -29,7 +28,6 @@ const AppRouter = () => (
       {/* <Route path="/profile1" element={<Profile1 />} /> */}
       {/* Các route khác */}
     </Route>
-    <Route path="/admin" element={<AdminPage />} />
     <Route path="/test" element={<Test />} />
     <Route path="/login" element={<Auth />} />
   </Routes>
@@ -37,7 +35,7 @@ const AppRouter = () => (
 
 const App = () => {
   const { showLogin, setShowLogin } = useAuth();
-  
+
   return (
     <Router>
       {showLogin && <Auth />}

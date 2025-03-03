@@ -153,7 +153,7 @@ export default function Register({ chaneform }) {
                 name="gender"
                 value={formData.gender}
                 onChange={handleChange}
-                className="mt-2 block w-full px-4 py-3 min-h-[46.3px] rounded-lg focus:ring-2 focus:ring-blue-300 focus:outline-none bg-gray-50 shadow-inner shadow-gray-400"
+                className="mt-2 block w-full px-4 py-3 min-h-[46.3px] rounded-lg focus:ring-2 focus:ring-blue-300 focus:outline-none bg-gray-100 shadow-inner shadow-gray-200"
               >
                 <option value="">Chọn</option>
                 <option value="Male">Nam</option>
@@ -208,7 +208,7 @@ const InputField = ({
       value={value}
       onChange={onChange}
       placeholder={onHoder}
-      className={`mt-2 block w-full px-4 py-3  rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-300 focus:outline-none shadow-inner shadow-gray-400 ${
+      className={`mt-2 block w-full px-4 py-3  rounded-lg bg-gray-100 focus:ring-2 focus:ring-blue-300 focus:outline-none shadow-inner shadow-gray-200 ${
         error ? "border-red-500" : "border-gray-300"
       }`}
     />

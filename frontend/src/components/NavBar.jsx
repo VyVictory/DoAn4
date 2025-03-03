@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, use } from "react";
 import {
   VideoCameraIcon,
   HomeIcon,
@@ -6,6 +6,7 @@ import {
   ShoppingBagIcon,
   MagnifyingGlassIcon,
   Bars3Icon,
+  XMarkIcon ,
 } from "@heroicons/react/24/solid";
 import {
   ArrowLeftIcon,
@@ -18,11 +19,14 @@ import avt from "../img/DefaultAvatar.jpg";
 import LinkTo from "./LinkTo";
 import UserDropDow from "./UserDropDow";
 import { useAuth } from "./context/AuthProvider";
+import SearchList from "./searchUser";
 
 const NavBar = () => {
   const { showLogin, setShowLogin, profile, isLoadingProfile } = useAuth();
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [searchTerm, setSearchTerm] = useState(null);
+
   const dropdownRef = useRef(null);
   const searchRef = useRef(null);
   const inputSearchRef = useRef(null);
@@ -39,7 +43,6 @@ const NavBar = () => {
       setIsSearchVisible(false);
     }
   };
-
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setIsDropdownVisible(false);
@@ -122,43 +125,52 @@ const NavBar = () => {
               ref={inputSearchRef}
               className={`flex w-full items-center flex-grow transition-all duration-300 ease-in-out`}
               style={{
-                maxWidth: isSearchVisible ? "350px" : width, // Transition from 0px to 350px
-                overflow: "hidden", // Hide overflow during transition
+                maxWidth: isSearchVisible ? "350px" : width, // Transition width
+                overflow: "hidden",
               }}
             >
+              {/* Nút mở ô tìm kiếm */}
               <button onClick={() => setIsSearchVisible(true)}>
                 <MagnifyingGlassIcon
                   className={`h-10 w-10 stroke-gray-300 p-2 bg-slate-100 hover:stroke-violet-400
-        ${
-          isSearchVisible ? "rounded-l-full " : "rounded-full lg:rounded-r-none"
-        }`}
+            ${
+              isSearchVisible
+                ? "rounded-l-full "
+                : "rounded-full lg:rounded-r-none"
+            }`}
                 />
               </button>
+
+              {/* Input tìm kiếm */}
               <div
-                className={`  ${
-                  isSearchVisible ? "block " : "hidden lg:block"
-                }   relative w-full bg-slate-100 border-gray-300 rounded-r-full `}
+                className={`relative w-full bg-slate-100 border-gray-300 rounded-r-full ${
+                  isSearchVisible ? "block" : "hidden lg:block"
+                }`}
               >
                 <input
                   type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                   onClick={() => setIsSearchVisible(true)}
                   placeholder="Tìm kiếm trên O no"
-                  className="w-full py-2 h-10 border rounded-md focus:outline-none focus:ring-0 bg-transparent border-none"
+                  className="w-full py-2 h-10 border rounded-md focus:outline-none focus:ring-0 bg-transparent border-none px-4 pr-10"
                 />
+
+                {/* Nút X để xóa nội dung tìm kiếm */}
+                {searchTerm && (
+                  <button
+                    onClick={() => setSearchTerm("")}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  >
+                    <XMarkIcon className="h-5 w-5" />
+                  </button>
+                )}
               </div>
             </div>
           </div>
 
           {/* Phần dưới: Hiển thị kết quả tìm kiếm */}
-          {isSearchVisible && (
-            <div className="p-2">
-              <ul>
-                <li>Search Result 1</li>
-                <li>Search Result 2</li>
-                <li>Search Result 3</li>
-              </ul>
-            </div>
-          )}
+          {isSearchVisible && <SearchList value={searchTerm} />}
         </div>
 
         <div className="flex-grow"></div>
@@ -171,9 +183,9 @@ const NavBar = () => {
             <Bars3Icon className="h-7 w-7 text-gray-700 hover:text-blue-500 transition" />
           </button>
           <LinkTo namepage="messages">
-            <button className="bg-gray-100 p-2 rounded-full hover:bg-blue-100 hover:ring-2 hover:ring-blue-200 transition duration-300">
+            <div className="bg-gray-100 p-2 rounded-full hover:bg-blue-100 hover:ring-2 hover:ring-blue-200 transition duration-300">
               <ChatBubbleLeftIcon className="h-7 w-7 text-gray-700 hover:text-blue-500 transition" />
-            </button>
+            </div>
           </LinkTo>
           <LinkTo
             namepage="notification"
@@ -215,11 +227,10 @@ const NavBar = () => {
       <div className="h-[64px] absolute left-1/2 transform -translate-x-1/2 top-0 w-fit flex justify-center">
         <ul className="HighNavbar hidden lg:flex flex-row justify-center gap-3">
           {menuItems.map(({ icon: Icon, namepage }, index) => (
-            <div className="h-full py-1 flex items-center">
+            <div key={index} className="h-full py-1 flex items-center">
               {" "}
               {/*border-b-4 border-blue-500*/}
               <LinkTo
-                key={index}
                 namepage={namepage}
                 css="group flex items-center hover:bg-gray-200 w-24 h-full justify-center rounded-md transition-colors duration-200"
               >

@@ -9,28 +9,34 @@ export const ProfileProvider = ({ children }) => {
   const location = useLocation(); // Lấy URL hiện tại
   const [idUser, setIdUser] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [profileRender, setProfileRender] = useState(null);
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get("id");
   useEffect(() => {
     if (id) {
       setIdUser(id);
+    } else {
+      setLoading(false);
     }
   }, [id]);
   useEffect(() => {
     const parts = location.pathname.split("/"); // Tách URL thành mảng
-    setContent(parts.length   > 2 ? parts[2] : null); // Gán content nếu có
+    setContent(parts.length > 2 ? parts[2] : null); // Gán content nếu có
   }, [location.pathname]); // Chạy lại khi URL thay đổi
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         const response = await getCurrentUser(idUser);
+        setLoading(false);
         setCurrentUser(response);
       } catch (error) {
         console.error("Get Profile Error:", error);
       }
     };
-    fetchProfile();
+    idUser && fetchProfile();
   }, [idUser]);
+  // console.log(content);
   return (
     <ProfileContext.Provider
       value={{
@@ -38,6 +44,10 @@ export const ProfileProvider = ({ children }) => {
         setContent,
         idUser,
         setIdUser,
+        loading,
+        profileRender,
+        setProfileRender,
+        setLoading,
         setCurrentUser,
         currentUser,
       }}

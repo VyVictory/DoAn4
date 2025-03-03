@@ -5,11 +5,11 @@ import React, {
   useCallback,
   useMemo,
 } from "react";
-import { useAuth } from "../../context/AuthProvider";
+import { useAuth } from "../../../components/context/AuthProvider";
 import "../../../css/post.css";
 import PostLeft from "./PostLeft";
 import PostRight from "./PostRigh";
-const ContentProfile = () => {
+const ContentProfile = ({data}) => {
   const { profile } = useAuth();
   const scrollRef = useRef(null);
   const targetRef = useRef(null);
@@ -67,7 +67,7 @@ const ContentProfile = () => {
           }`}
         >
           <div className="flex flex-col  w-2/5 space-y-4 md:pl-4">
-            <PostLeft />
+            <PostLeft data={data}/>
           </div>
           <div className="  min-h-screen w-3/5 hidden md:block"></div>
         </div>

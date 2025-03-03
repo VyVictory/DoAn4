@@ -20,8 +20,8 @@ const Messages = () => {
   const divs = [];
   for (let i = 0; i < 30; i++) {
     divs.push(
-      <>
-        <div key={i} className="flex space-x-4 justify-end">
+      <React.Fragment key={i}>
+        <div className="flex space-x-4 justify-end">
           <div className="bg-gray-200 p-2 rounded-md max-w-xs">
             Đơn hàng #12345, tôi không thấy được trạng thái giao hàng.
           </div>
@@ -31,7 +31,7 @@ const Messages = () => {
             Để tôi kiểm tra giúp bạn nhé!
           </div>
         </div>
-      </>
+      </React.Fragment>
     );
   }
 
@@ -114,16 +114,19 @@ const Messages = () => {
               transition={{ duration: 0.3, ease: "easeInOut" }} // 🟢 Fix hiệu ứng thụt từ từ
               className="flex items-center w-full max-w-lg bg-violet-100 rounded-3xl shadow-sm pl-2 transition duration-300 ease-in-out"
             >
-              <button 
-              onClick={()=>{setSearchText(false)}}
-              className="h-10 w-10 hover:scale-125 justify-center text-violet-300 hover:text-violet-700 rounded-full transition duration-300 ease-in-out">
+              <button
+                onClick={() => {
+                  setSearchText(false);
+                }}
+                className="h-10 w-10 hover:scale-125 justify-center text-violet-300 hover:text-violet-700 rounded-full transition duration-300 ease-in-out"
+              >
                 <MagnifyingGlassIcon className="max-h-6" />
               </button>
               <input
                 type="text"
                 placeholder="Tìm kiếm trên O no"
                 onClick={() => {
-                    setSearchText(true);
+                  setSearchText(true);
                 }}
                 className="w-full h-10 pr-2 pl-1 text-gray-700 bg-transparent outline-none rounded-full focus:ring-0"
               />
