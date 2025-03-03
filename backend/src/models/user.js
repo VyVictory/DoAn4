@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema(
     coverPhoto: { type: String, default: "" },
     status: { type: Boolean, default: true },
     role: { type: String, required: true, default: 0 },
+    banned: { type: Boolean, default: false },
     education: { type: Object, default: [] }, // học vấn
     address: {
       street: { type: String, default: "" }, // Số nhà + Tên đường

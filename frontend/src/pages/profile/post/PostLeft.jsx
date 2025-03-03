@@ -5,7 +5,8 @@ import {
   BookOpenIcon,
   MapPinIcon,
 } from "@heroicons/react/24/solid";
-const PostLeft = () => {
+import { useProfile } from "../../../components/context/profile/ProfileProvider";
+const PostLeft = ({ data }) => {
   const iconSize = "w-8 h-8";
   return (
     <>
@@ -48,15 +49,32 @@ const PostLeft = () => {
           </div>
         </div>
         <div className="flex flex-row space-x-2 items-center">
-          <MapPinIcon fcaseIcon className={`${iconSize} text-gray-500`} />
-          <div>chưa thiết lập</div>
+          <MapPinIcon className={`${iconSize} text-gray-500`} />
+          <div>
+            {data?.address?.street ||
+            data?.address?.ward ||
+            data?.address?.district ||
+            data?.address?.country ||
+            data?.address?.city ? (
+              <>
+                {data.address.street && `${data.address.street}, `}
+                {data.address.ward && `${data.address.ward}, `}
+                {data.address.district && `${data.address.district}, `}
+                {data.address.city && `${data.address.city}, `}
+                {data.address.country}
+              </>
+            ) : (
+              "chưa thiết lập"
+            )}
+          </div>
         </div>
+
         <div className="flex flex-row space-x-2 items-center">
           <BriefcaseIcon className={`${iconSize} text-gray-500`} />
           <div>chưa thiết lập</div>
         </div>
         <div className="flex flex-row space-x-2 items-center">
-          <BookOpenIcon fcaseIcon className={`${iconSize} text-gray-500`} />
+          <BookOpenIcon className={`${iconSize} text-gray-500`} />
           <div>chưa thiết lập</div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import PostRight from "../components/profile/post/PostRigh";
+import PostRight from "./profile/post/PostRigh";
 
 const UserPage = () => {
   return (

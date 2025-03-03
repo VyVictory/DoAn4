@@ -4,6 +4,7 @@ import React, {
   useEffect,
   useCallback,
   useMemo,
+  use,
 } from "react";
 import { useAuth } from "../../components/context/AuthProvider";
 import { useNavigate } from "react-router-dom";
@@ -14,21 +15,36 @@ import {
 } from "@heroicons/react/24/solid";
 import avt from "../../img/DefaultAvatar.jpg";
 import "../../css/post.css";
-import Post from "./post/ContentProfile";
+import ContentProfile from "./post/ContentProfile";
 import pictureBG from "../../img/sky.webp";
 import MenuProfile from "./MenuProfile";
+import { useProfile } from "../../components/context/profile/ProfileProvider";
 
 const Profile = () => {
   const { profile, isLoadingProfile } = useAuth();
-  const navigate = useNavigate();
+  const {
+    setIdUser,
+    setCurrentUser,
+    currentUser,
+    setLoading,
+    loading,
+    setProfileRender,
+    profileRender,
+    content,
+    setContent,
+  } = useProfile();
+  const [isShow, setIsShow] = useState(false);
 
+  const navigate = useNavigate();
+  const urlParams = new URLSearchParams(window.location.search);
+  const id = urlParams.get("id");
   useEffect(() => {
-    console.log(isLoadingProfile);
-    console.log(profile);
-    if (!profile && isLoadingProfile == false) {
-      navigate("/login");
+    if (currentUser != null) {
+      setProfileRender(currentUser);
+    } else if (!id && isLoadingProfile == false) {
+      setProfileRender(profile);
     }
-  }, [profile, navigate, isLoadingProfile]);
+  }, [currentUser, isLoadingProfile]);
 
   const scrollRef = useRef(null);
   useEffect(() => {
@@ -39,7 +55,9 @@ const Profile = () => {
     () => <div className="text-center">0 followers ❁ 9 following</div>,
     []
   );
-
+  if (profileRender == null) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="NavbarUser ">
       <div className="w-full  flex-col relative min-h-screen ">
@@ -68,8 +86,11 @@ const Profile = () => {
                 </button>
                 <div className="flex flex-col items-center">
                   <strong className="text-3xl text-center md:text-start w-full ">
-                    {profile?.firstName + profile?.lastName}
+                    {(profileRender?.firstName ?? "") +
+                      " " +
+                      (profileRender?.lastName ?? "")}
                   </strong>
+
                   {followersInfo}
                   <div>
                     {[...Array(6)].map((_, index) => (
@@ -88,12 +109,12 @@ const Profile = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-row md:flex-col mb-2 md:mb-0 items-center justify-center space-y-2">
+              <div className="flex flex-row md:flex-col md:items-center mb-2 md:mb-0 items-center justify-center space-y-0 md:space-y-2 space-x-2 md:space-x-0">
                 <button className="bg-gray-50 hover:bg-violet-50 px-2 py-2 rounded-md flex items-center transition-transform duration-200 hover:scale-110">
                   <PencilIcon className="h-6 w-6 text-gray-500" />
                   Edit
                 </button>
-                <button className="bg-gray-50 hover:bg-violet-50 min-w-16 justify-center px-2 py-1 rounded-md flex items-center">
+                <button className="bg-gray-50 hover:bg-violet-50 min-w-16 justify-center px-2 py-1 rounded-md flex items-center transition-transform duration-200 hover:scale-110">
                   <ChevronDownIcon className="w-8 h-8 text-gray-500 transition-transform duration-200 hover:scale-125 hover:text-violet-400" />
                 </button>
               </div>
@@ -103,7 +124,9 @@ const Profile = () => {
         </div>
 
         {/* left lăn hết mới được lăn right*/}
-        <Post />
+        {content == null || content == "posts" ? (
+          <ContentProfile data={profileRender} />
+        ) : null}
       </div>
     </div>
   );
