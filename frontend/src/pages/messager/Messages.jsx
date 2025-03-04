@@ -62,10 +62,10 @@ const Messages = () => {
   UseClickOutside(MessMenuRight, () => setRightbarOpen(false));
 
   const sidebarClass = `NavbarUser z-20 bg-white bg-transparent transition-all duration-500 ease-in-out ${
-    isSidebarOpen ? "w-[360px] h-full " : "w-0 h-full"
+    isSidebarOpen ? "w-[360px] h-full " : "w-0 h-full fixed"
   } lg:w-[360px] fixed lg:relative`;
   const rightbarClass = `NavbarUser z-20 bg-white transition-all duration-500 ease-in-out right-0 ${
-    isRightbarOpen ? "w-[360px] h-full " : "w-0 h-full"
+    isRightbarOpen ? "w-[360px] h-full " : "w-0 h-full fixed"
   } lg:w-[360px] fixed lg:relative`;
   const [searchText, setSearchText] = useState(false);
   return (
