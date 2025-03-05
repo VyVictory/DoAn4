@@ -17,7 +17,7 @@ app.use(
       "http://localhost:3000",
       "https://ono-eight.vercel.app",
       "https://ono-chi.vercel.app", 
-      "https://ono-seven.vercel.app",
+      "https://ono-ono.vercel.app",
     ], // Allow only requests from localhost:3000
     methods: "GET,POST,PUT,DELETE", // Allow specific HTTP methods
     allowedHeaders: "Content-Type, Authorization", // Allow specific headers

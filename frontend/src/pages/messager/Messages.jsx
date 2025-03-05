@@ -61,15 +61,15 @@ const Messages = () => {
   UseClickOutside(MessMenuLeft, () => setSidebarOpen(false));
   UseClickOutside(MessMenuRight, () => setRightbarOpen(false));
 
-  const sidebarClass = `NavbarUser z-20 bg-white bg-transparent transition-all duration-500 ease-in-out ${
+  const sidebarClass = ` z-20 bg-white bg-transparent transition-all duration-500 ease-in-out ${
     isSidebarOpen ? "w-[360px] h-full " : "w-0 h-full fixed"
   } lg:w-[360px] fixed lg:relative`;
-  const rightbarClass = `NavbarUser z-20 bg-white transition-all duration-500 ease-in-out right-0 ${
+  const rightbarClass = ` z-20 bg-white transition-all duration-500 ease-in-out right-0 ${
     isRightbarOpen ? "w-[360px] h-full " : "w-0 h-full fixed"
   } lg:w-[360px] fixed lg:relative`;
   const [searchText, setSearchText] = useState(false);
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen NavbarUser">
       {/* Sidebar */}
       <div ref={MessMenuLeft} className={sidebarClass}>
         <div
@@ -155,8 +155,8 @@ const Messages = () => {
         </div>
       </div>
       {/* Z-INDEX Chat Section */}
-      <div className="NavbarUser flex flex-1 flex-col">
-        <div className="shadow-sm border-b px-3 z-10 flex bg-white  ">
+      <div className=" h-full flex-1 flex flex-col ">
+        <div className="shadow-sm top-0 border-b px-3 z-10 flex bg-white  ">
           <button
             className="lg:hidden"
             onClick={() => setSidebarOpen((prevState) => !prevState)}
@@ -197,7 +197,7 @@ const Messages = () => {
             )}
           </div>
         </div>
-        <div className="flex-1 p-4 bg-gray-100 overflow-y-auto">
+        <div className="flex-1 p-4 bg-gray-100  overflow-y-auto">
           {/* Tin nhắn thử */}
           <div className="space-y-4">
             {/* <div className="flex space-x-4">
@@ -213,7 +213,7 @@ const Messages = () => {
         </div>
 
         {/* Chat input */}
-        <div className="shadow-sm border-t flex items-center p-2 bg-white">
+        <div className="shadow-sm border-t flex items-center p-2 bottom-0 bg-white">
           <div className="flex items-center flex-row space-x-1 pr-2">
             <button>
               <svg
