@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 
 const ChatMessages = ({ messages }) => {
   const lastMessageRef = useRef(null);
-  const containerRef = useRef(null);
+  const containerRefMess = useRef(null);
 
   // Cuộn đến tin nhắn cuối cùng khi có tin nhắn mới
   useEffect(() => {
@@ -13,9 +13,9 @@ const ChatMessages = ({ messages }) => {
 
   // Hàm cuộn xuống cuối
   const scrollToBottom = () => {
-    if (containerRef.current) {
-      containerRef.current.scrollTo({
-        top: containerRef.current.scrollHeight,
+    if (containerRefMess.current) {
+      containerRefMess.current.scrollTo({
+        top: containerRefMess.current.scrollHeight,
         behavior: "smooth",
       });
     }
@@ -25,7 +25,7 @@ const ChatMessages = ({ messages }) => {
     <div className="flex flex-col h-full">
       {/* Danh sách tin nhắn */}
       <div
-        ref={containerRef}
+        ref={containerRefMess}
         className="flex-1 p-4 bg-gray-100 overflow-y-auto"
       >
         {messages.map((msg, index) => (

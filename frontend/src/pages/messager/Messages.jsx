@@ -61,102 +61,88 @@ const Messages = () => {
   UseClickOutside(MessMenuLeft, () => setSidebarOpen(false));
   UseClickOutside(MessMenuRight, () => setRightbarOpen(false));
 
-  const sidebarClass = ` z-20 bg-white bg-transparent transition-all duration-500 ease-in-out ${
-    isSidebarOpen ? "w-[360px] h-full " : "w-0 h-full fixed"
-  } lg:w-[360px] fixed lg:relative`;
   const rightbarClass = ` z-20 bg-white transition-all duration-500 ease-in-out right-0 ${
     isRightbarOpen ? "w-[360px] h-full " : "w-0 h-full fixed"
   } lg:w-[360px] fixed lg:relative`;
   const [searchText, setSearchText] = useState(false);
   return (
-    <div className="flex h-screen NavbarUser">
-      {/* Sidebar */}
-      <div ref={MessMenuLeft} className={sidebarClass}>
-        <div
-          className={`${
-            isSidebarOpen ? "block" : "hidden lg:block"
-          } border-r shadow-2xl border-x-gray-300 h-full `}
-        >
-          <div className="p-2 flex justify-between items-center relative">
-            <h2 className="text-2xl font-semibold w-full absolute text-center">
-              Đoạn chat
-            </h2>
-            <div className=" w-full  justify-end flex relative z-10 h-8">
-              <ArrowLeftIcon
-                onClick={() => setSidebarOpen((prevState) => !prevState)}
-                className="h-8 lg:hidden hover:scale-125 text-blue-500 bg-violet-200 active:bg-violet-400 hover:bg-violet-300 rounded-3xl p-1 cursor-pointer"
-              />
+    <div className="flex h-screen ">
+      {/* Sidebar className={sidebarClass} */}
+      <motion.div
+        ref={MessMenuLeft}
+        initial={false} // Không cần animate bằng Framer Motion nữa
+        transition={{ duration: 0.5, ease: "easeInOut" }}
+        className={` NavbarUser
+    fixed left-0 top-0 h-full w-[360px] border-r shadow-2xl border-x-gray-300 bg-white z-30  transition-transform duration-300 ease-in-out   ${
+      isSidebarOpen ? "translate-x-0" : "translate-x-[-100%]"
+    }   lg:w-[350px] lg:relative lg:block lg:translate-x-0  `}
+      >
+        {/* Nội dung bên trong */}
+        <AnimatePresence>
+          <motion.div
+            initial={{ opacity: 0 }} // Ban đầu ẩn nội dung
+            animate={{ opacity: 1 }} // Hiện dần nội dung sau khi mở sidebar
+            exit={{ opacity: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+          >
+            <div className="p-2 flex justify-between items-center relative">
+              <h2 className="text-2xl font-semibold w-full absolute text-center truncate whitespace-nowrap">
+                Đoạn chat
+              </h2>
+              <div className="w-full justify-end flex relative z-10 h-8">
+                <ArrowLeftIcon
+                  onClick={() => setSidebarOpen((prevState) => !prevState)}
+                  className="h-8 lg:hidden hover:scale-125 text-blue-500 bg-violet-200 active:bg-violet-400 hover:bg-violet-300 rounded-3xl p-1 cursor-pointer"
+                />
+              </div>
             </div>
-          </div>
-
-          {/* Phần trên: Logo và ô tìm kiếm */}
-          <div className="flex items-center max-h-12 justify-center px-4 space-x-2 w-full rounded-lg pb-1">
-            {/* Hiệu ứng nút mũi tên */}
-            <AnimatePresence>
-              {searchText && (
-                <motion.button
-                  onClick={() => setSearchText(false)}
-                  initial={{ opacity: 0, x: -20 }} // Bắt đầu mờ và lệch trái
-                  animate={{ opacity: 1, x: 0 }} // Trượt vào
-                  exit={{ opacity: 0, x: -20 }} // Trượt ra khi ẩn
-                  transition={{ duration: 0.3, ease: "easeOut" }}
-                  className="h-10 w-10 px-2 flex items-center justify-center hover:bg-violet-100 rounded-full transition duration-200 ease-in-out"
-                >
-                  <ArrowLeftIcon className="h-6 w-6 hover:scale-125 text-blue-500" />
-                </motion.button>
-              )}
-            </AnimatePresence>
 
             {/* Ô tìm kiếm */}
-            <motion.div
-              initial={{ width: "100%" }} // Bắt đầu với full width
-              animate={{ width: searchText ? "90%" : "100%" }} // Khi có searchText thì thu nhỏ
-              transition={{ duration: 0.3, ease: "easeInOut" }} // 🟢 Fix hiệu ứng thụt từ từ
-              className="flex items-center w-full max-w-lg bg-violet-100 rounded-3xl shadow-sm pl-2 transition duration-300 ease-in-out"
-            >
-              <button
-                onClick={() => {
-                  setSearchText(false);
-                }}
-                className="h-10 w-10 hover:scale-125 justify-center text-violet-300 hover:text-violet-700 rounded-full transition duration-300 ease-in-out"
+            <div className="flex items-center max-h-12 justify-center px-4 space-x-2 w-full rounded-lg pb-1">
+              <motion.div
+                initial={{ width: "100%" }}
+                animate={{ width: searchText ? "90%" : "100%" }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="flex items-center w-full max-w-lg bg-violet-100 rounded-3xl shadow-sm pl-2 transition duration-300 ease-in-out"
               >
-                <MagnifyingGlassIcon className="max-h-6" />
+                <button
+                  onClick={() => setSearchText(false)}
+                  className="h-10 w-10 hover:scale-125 justify-center text-violet-300 hover:text-violet-700 rounded-full transition duration-300 ease-in-out"
+                >
+                  <MagnifyingGlassIcon className="max-h-6" />
+                </button>
+                <input
+                  type="text"
+                  placeholder="Tìm kiếm trên O no"
+                  onClick={() => setSearchText(true)}
+                  className="w-full h-10 pr-2 pl-1 text-gray-700 bg-transparent outline-none rounded-full focus:ring-0"
+                />
+              </motion.div>
+            </div>
+
+            {/* Menu */}
+            <div className="p-2 flex space-x-2 bg-white shadow-sm rounded-lg overflow-x-auto pb-3 mx-1">
+              <button className="flex items-center space-x-2 bg-gray-100 text-gray-700 rounded-3xl px-4 py-2 shadow-sm hover:bg-violet-100 hover:scale-105 active:bg-violet-200 active:scale-105 transition-all duration-300 ease-in-out">
+                <FriendIcon />
+                <span className="text-sm font-medium text-nowrap">Bạn bè</span>
               </button>
-              <input
-                type="text"
-                placeholder="Tìm kiếm trên O no"
-                onClick={() => {
-                  setSearchText(true);
-                }}
-                className="w-full h-10 pr-2 pl-1 text-gray-700 bg-transparent outline-none rounded-full focus:ring-0"
-              />
-            </motion.div>
-          </div>
-          <div className="p-2 flex space-x-2 bg-white shadow-sm rounded-lg overflow-x-auto  pb-3 mx-2">
-            {/* Nút menu */}
-            <button className="flex items-center space-x-2 bg-gray-100 text-gray-700 rounded-3xl px-4 py-2 shadow-sm hover:bg-violet-100 hover:scale-105 active:bg-violet-200 active:scale-105 transition-all duration-300 ease-in-out">
-              <FriendIcon />
-              <span className="text-sm font-medium text-nowrap">Bạn bè</span>
-            </button>
-            <button className="flex items-center space-x-2 bg-gray-100 text-gray-700 rounded-3xl px-4 shadow-sm hover:bg-blue-100 hover:scale-105 active:bg-blue-200 active:scale-105 transition-all duration-300 ease-in-out">
-              <GroupIcon />
-              <span className="text-sm font-medium">Nhóm</span>
-            </button>
-            <button className="flex items-center space-x-2 bg-gray-100 text-gray-700 rounded-3xl px-4 shadow-sm hover:bg-orange-100 hover:scale-105 active:bg-orange-200 active:scale-105 transition-all duration-300 ease-in-out">
-              <NewsIcon />
-              <span className="text-sm font-medium">Tin</span>
-            </button>
-          </div>
-          <ul className=" space-y-2">
-            <li>
-              <div></div>
-            </li>
-          </ul>
-        </div>
-      </div>
+              <button className="flex items-center space-x-2 bg-gray-100 text-gray-700 rounded-3xl px-4 shadow-sm hover:bg-blue-100 hover:scale-105 active:bg-blue-200 active:scale-105 transition-all duration-300 ease-in-out">
+                <GroupIcon />
+                <span className="text-sm font-medium">Nhóm</span>
+              </button>
+              <button className="flex items-center space-x-2 bg-gray-100 text-gray-700 rounded-3xl px-4 shadow-sm hover:bg-orange-100 hover:scale-105 active:bg-orange-200 active:scale-105 transition-all duration-300 ease-in-out">
+                <NewsIcon />
+                <span className="text-sm font-medium">Tin</span>
+              </button>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </motion.div>
+
       {/* Z-INDEX Chat Section */}
-      <div className=" h-full flex-1 flex flex-col ">
-        <div className="shadow-sm top-0 border-b px-3 z-10 flex bg-white  ">
+      <div className="w-full h-screen NavbarUser flex flex-col">
+        {/* top nav */}
+        <div className="shadow-sm border-b px-3 z-10  flex items-center bg-white  ">
           <button
             className="lg:hidden"
             onClick={() => setSidebarOpen((prevState) => !prevState)}
@@ -197,23 +183,17 @@ const Messages = () => {
             )}
           </div>
         </div>
-        <div className="flex-1 p-4 bg-gray-100  overflow-y-auto">
-          {/* Tin nhắn thử */}
-          <div className="space-y-4">
-            {/* <div className="flex space-x-4">
-              <div className="bg-blue-500 text-white p-2 rounded-md max-w-xs">
-                Chào bạn! Tôi có thể giúp gì cho bạn hôm nay?
-              </div>
-            </div> */}
+        {/* center */}
+        <div className="flex-grow overflow-y-auto">
+          <div className="flex flex-col space-y-4 p-4 h-full">
             {divs}
             <ChatMessages
               messages={["Xin chào!", "Bạn khỏe không?", "Hôm nay bạn làm gì?"]}
             />
           </div>
         </div>
-
         {/* Chat input */}
-        <div className="shadow-sm border-t flex items-center p-2 bottom-0 bg-white">
+        <div className="shadow-sm border-t flex items-center p-2 bg-white">
           <div className="flex items-center flex-row space-x-1 pr-2">
             <button>
               <svg
@@ -312,27 +292,33 @@ const Messages = () => {
         </div>
       </div>
       {/* Rightbar */}
-      {isRightbarOpen1 && (
-        <div ref={MessMenuRight} className={rightbarClass}>
-          <div
-            className={`${
-              isRightbarOpen ? "" : "hidden lg:block"
-            } border-l shadow-xl h-full`}
-          >
-            <div className="p-2 flex justify-between items-center">
-              <div className="flex z-10 h-8 absolute">
-                <ArrowRightIcon
-                  onClick={() => setRightbarOpen((prevState) => !prevState)}
-                  className="h-8 lg:hidden hover:scale-125 text-blue-500 bg-violet-200 active:bg-violet-400 hover:bg-violet-300 rounded-3xl p-1 cursor-pointer"
-                />
-              </div>
-              <h2 className=" w-full  text-center text-2xl font-semibold">
-                Thông tin
-              </h2>
+      <div className="NavbarUser">
+        <div
+          ref={MessMenuRight}
+          className={`
+      fixed NavbarUser right-0 top-0 h-full w-[360px] border-l shadow-xl bg-white z-30
+      transition-transform duration-300  ease-in-out
+      ${isRightbarOpen ? "translate-x-0" : "translate-x-[100%]"}
+      ${
+        isRightbarOpen1
+          ? "lg:relative lg:translate-x-0 lg:duration-0"
+          : "lg:duration-0"
+      } 
+    `}
+        >
+          <div className="p-2 flex justify-between items-center">
+            <div className="flex z-10 h-8 absolute">
+              <ArrowRightIcon
+                onClick={() => setRightbarOpen((prevState) => !prevState)}
+                className="h-8 lg:hidden hover:scale-125 text-blue-500 bg-violet-200 active:bg-violet-400 hover:bg-violet-300 rounded-3xl p-1 cursor-pointer"
+              />
             </div>
+            <h2 className="w-full text-center text-2xl font-semibold">
+              Thông tin
+            </h2>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };
