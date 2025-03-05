@@ -46,9 +46,12 @@ To get started with this project, follow the instructions below:
    ```bash
    npm run build
    ```
+## HOW To Deloy
+vercel login
+vercel
+vercel --prod
 
 ## Tailwind CSS Setup
-
 This project is configured to use Tailwind CSS. You can customize the styles by modifying the `tailwind.config.js` file.
 
 ## Components
