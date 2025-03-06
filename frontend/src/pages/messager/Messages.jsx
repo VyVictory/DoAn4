@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Bars3Icon,
   ExclamationCircleIcon,
@@ -11,6 +11,9 @@ import { FriendIcon, GroupIcon, NewsIcon } from "../../css/icon";
 import { motion, AnimatePresence } from "framer-motion";
 import ChatMessages from "./ChatMessages";
 const Messages = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isRightbarOpen, setRightbarOpen] = useState(false);
   const [isRightbarOpen1, setRightbarOpen1] = useState(true);
@@ -61,9 +64,6 @@ const Messages = () => {
   UseClickOutside(MessMenuLeft, () => setSidebarOpen(false));
   UseClickOutside(MessMenuRight, () => setRightbarOpen(false));
 
-  const rightbarClass = ` z-20 bg-white transition-all duration-500 ease-in-out right-0 ${
-    isRightbarOpen ? "w-[360px] h-full " : "w-0 h-full fixed"
-  } lg:w-[360px] fixed lg:relative`;
   const [searchText, setSearchText] = useState(false);
   return (
     <div className="flex h-screen ">
@@ -73,7 +73,7 @@ const Messages = () => {
         initial={false} // Không cần animate bằng Framer Motion nữa
         transition={{ duration: 0.5, ease: "easeInOut" }}
         className={` NavbarUser
-    fixed left-0 top-0 h-full w-[360px] border-r shadow-2xl border-x-gray-300 bg-white z-30  transition-transform duration-300 ease-in-out   ${
+    fixed left-0 top-0 h-full w-[360px] shadow-lg shadow-gray-300  border-x-gray-300 bg-white z-30  transition-transform duration-300 ease-in-out   ${
       isSidebarOpen ? "translate-x-0" : "translate-x-[-100%]"
     }   lg:w-[350px] lg:relative lg:block lg:translate-x-0  `}
       >
@@ -91,7 +91,10 @@ const Messages = () => {
               </h2>
               <div className="w-full justify-end flex relative z-10 h-8">
                 <ArrowLeftIcon
-                  onClick={() => setSidebarOpen((prevState) => !prevState)}
+                  onClick={() => {
+                    setSidebarOpen((prevState) => !prevState);
+                    setSearchText("");
+                  }}
                   className="h-8 lg:hidden hover:scale-125 text-blue-500 bg-violet-200 active:bg-violet-400 hover:bg-violet-300 rounded-3xl p-1 cursor-pointer"
                 />
               </div>
@@ -99,10 +102,22 @@ const Messages = () => {
 
             {/* Ô tìm kiếm */}
             <div className="flex items-center max-h-12 justify-center px-4 space-x-2 w-full rounded-lg pb-1">
-              <motion.div
-                initial={{ width: "100%" }}
-                animate={{ width: searchText ? "90%" : "100%" }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
+              <AnimatePresence>
+                {searchText && (
+                  <motion.button
+                    onClick={() => setSearchText(false)}
+                    initial={{ opacity: 0, x: -20 }} // Bắt đầu mờ và lệch trái
+                    animate={{ opacity: 1, x: 0 }} // Trượt vào
+                    exit={{ opacity: 0, x: -20 }} // Trượt ra khi ẩn
+                    transition={{ duration: 0.02, ease: "easeOut" }}
+                    className="h-10 w-10 px-2 flex items-center justify-center hover:bg-violet-100 rounded-full transition duration-200 ease-in-out"
+                  >
+                    <ArrowLeftIcon className="h-6 w-6 hover:scale-125 text-blue-500" />
+                  </motion.button>
+                )}
+              </AnimatePresence>
+              <motion.div 
+                transition={{ duration: 0.3, ease: "easeInOut" }} 
                 className="flex items-center w-full max-w-lg bg-violet-100 rounded-3xl shadow-sm pl-2 transition duration-300 ease-in-out"
               >
                 <button
@@ -296,9 +311,9 @@ const Messages = () => {
         <div
           ref={MessMenuRight}
           className={`
-      fixed NavbarUser right-0 top-0 h-full w-[360px] border-l shadow-xl bg-white z-30
+      fixed  right-0 top-0 NavbarUser lg:pt-0 h-full w-[360px] border-l shadow-lg shadow-gray-300 bg-white z-30
       transition-transform duration-300  ease-in-out
-      ${isRightbarOpen ? "translate-x-0" : "translate-x-[100%]"}
+      ${isRightbarOpen ? "translate-x-0 " : "translate-x-[100%]"}
       ${
         isRightbarOpen1
           ? "lg:relative lg:translate-x-0 lg:duration-0"
